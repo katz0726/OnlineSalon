@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+table, th, td {
+	border-collapse: collapse;
+	border: #000 1px solid;
+}
+
+th {
+	background-color: pink;
+}
+
