@@ -13,30 +13,30 @@ public class Group {
 	@Id
 	@NotNull
 	@Column(name="group_id")
-	private int groupId;
+	private int group_id;
 
 	@NotNull
 	@Size(max=80)
 	@Column(name="group_name")
-	private String groupName;
+	private String group_name;
 
 	@Column(name="modified")
 	private Date modified;
 
-	public int getGroupId() {
-		return groupId;
+	public int getGroup_id() {
+		return group_id;
 	}
 
-	public void setGroupId(int groupId) {
-		this.groupId = groupId;
+	public void setGroup_id(int group_id) {
+		this.group_id = group_id;
 	}
 
-	public String getGroupName() {
-		return groupName;
+	public String getGroup_name() {
+		return group_name;
 	}
 
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
+	public void setGroup_name(String group_name) {
+		this.group_name = group_name;
 	}
 
 	public Date getModified() {
@@ -49,6 +49,7 @@ public class Group {
 
 	@Override
 	public String toString() {
-		return "Group [groupId=" + groupId + ", groupName=" + groupName + ", modified=" + modified + "]";
+		return "Group [group_id=" + group_id + ", group_name=" + group_name
+				+ ", modified=" + modified + "]";
 	}
 }

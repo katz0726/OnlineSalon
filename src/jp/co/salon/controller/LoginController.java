@@ -15,7 +15,7 @@ import org.glassfish.jersey.server.mvc.Template;
 import jp.co.salon.common.DBManager;
 import jp.co.salon.entity.Group;
 import jp.co.salon.service.WebApiBase;
-import jp.co.salon.service.sql.createGroupSQL;
+import jp.co.salon.service.sql.CreateGroupSQL;
 
 @Path("api")
 public class LoginController {
@@ -27,9 +27,11 @@ public class LoginController {
  		try {
 			WebApiBase dbutil = new WebApiBase(DBManager.getConnection());
 
-	    	List<Group> groupList = dbutil.findAll(createGroupSQL.getGroups(), Group.class, 1);
+			String sql = CreateGroupSQL.getGroups();
+	    	List<Group> groupList = dbutil.findAll(sql, Group.class, 1);
 
 	    	System.out.println(groupList);
+	    	System.out.println("end----------------------");
 		} catch (ClassNotFoundException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
