@@ -1,4 +1,4 @@
-package jp.co.sample;
+package jp.co.salon.controller;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -11,10 +11,10 @@ import javax.ws.rs.Path;
 import org.glassfish.jersey.server.mvc.Template;
 
 @Path("api")
-public class MyResource {
+public class LoginController {
     @GET
     @Path("/hello-mvc")
-    @Template(name="/hello-mvc")
+    @Template(name="/html/hello-mvc")
     public String helloWorld() {
     	System.out.println("Hello, world");
 
@@ -23,7 +23,7 @@ public class MyResource {
 
     @POST
     @Path("/confirm")
-    @Template(name="/confirm")
+    @Template(name="/html/confirm")
     public Map<String, Object> confirm() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Date now = new Date();
