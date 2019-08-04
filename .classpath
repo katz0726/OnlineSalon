@@ -18,8 +18,6 @@
 	<classpathentry kind="lib" path="D:/libs/jackson-databind-2.9.9.1.jar"/>
 	<classpathentry kind="lib" path="D:/libs/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="D:/libs/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="D:/libs/log4j-api-2.12.0.jar"/>
-	<classpathentry kind="lib" path="D:/libs/log4j-core-2.12.0.jar"/>
 	<classpathentry kind="lib" path="D:/libs/postgresql-42.2.6.jar"/>
 	<classpathentry kind="lib" path="D:/libs/thymeleaf-3.0.11.RELEASE.jar"/>
 	<classpathentry kind="output" path="build/classes"/>

@@ -12,6 +12,9 @@ public class WebApiBase  implements AutoCloseable {
 
 	private Connection con = null;;
 
+	/** コンストラクタ */
+	public WebApiBase() {}
+
 	/**
 	 * 概要：コンストラクタ
 	 * @param con コネクション
