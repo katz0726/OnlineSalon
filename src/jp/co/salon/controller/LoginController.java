@@ -1,6 +1,5 @@
 package jp.co.salon.controller;
 
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,7 +11,6 @@ import javax.ws.rs.Path;
 
 import org.glassfish.jersey.server.mvc.Template;
 
-import jp.co.salon.common.DBManager;
 import jp.co.salon.entity.Group;
 import jp.co.salon.service.WebApiBase;
 import jp.co.salon.service.sql.CreateGroupSQL;
@@ -24,29 +22,10 @@ public class LoginController {
     @Template(name="/html/hello-mvc")
     public String helloWorld() {
 
- 		try {
-			WebApiBase dbutil = new WebApiBase(DBManager.getConnection());
-
+			WebApiBase dbutil = new WebApiBase();
 			String sql = CreateGroupSQL.getGroups();
+
 	    	List<Group> groupList = dbutil.findAll(sql, Group.class, 1);
-
-	    	System.out.println(groupList);
-	    	System.out.println("end----------------------");
-		} catch (ClassNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-
 
         return "Hello, world";
     }

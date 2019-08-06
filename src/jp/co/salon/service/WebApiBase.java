@@ -8,20 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WebApiBase  implements AutoCloseable {
+import jp.co.salon.common.DBManager;
 
-	private Connection con = null;;
-
-	/** コンストラクタ */
-	public WebApiBase() {}
-
-	/**
-	 * 概要：コンストラクタ
-	 * @param con コネクション
-	 */
-	public WebApiBase(Connection con) {
-		this.con = con;
-	}
+public class WebApiBase {
 
 	/**
 	 * 概要：ステートメントに引数に設定したパラメータを設定する
@@ -49,24 +38,31 @@ public class WebApiBase  implements AutoCloseable {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	public <E> List<E> findAll(String sql, Class<E> entity, Object... params)
-			throws SQLException, InstantiationException,
-			IllegalAccessException {
+	public <E> List<E> findAll(String sql, Class<E> entity, Object... params) {
 
 		ResultSet result = null;
+		List<E> resultList = new ArrayList<>();
 
-		// ステートメントを作成
-		PreparedStatement statement = con.prepareStatement(sql);
+		try (Connection con = DBManager.getConnection();) {
+			try (PreparedStatement statement = con.prepareStatement(sql);) {
 
-		// ステートメントにパラメータをセット
-		setParams(statement, params);
+				// ステートメントにパラメータをセット
+				setParams(statement, params);
 
-		// SQLを実行
-		result = statement.executeQuery();
+				// SQLを実行
+				result = statement.executeQuery();
 
-		// リザルトセットをリストに格納
-		List<E> resultList = toObjectList(result, entity);
+				// リザルトセットをリストに格納
+				resultList = toObjectList(result, entity);
 
+
+			} catch (Exception e) {
+				throw e;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
 		return resultList;
 	}
 
@@ -80,23 +76,27 @@ public class WebApiBase  implements AutoCloseable {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	public <E> E find(String sql, Class<E> entity, Object... params)
-			throws SQLException, InstantiationException,
-			IllegalAccessException {
+	public <E> E find(String sql, Class<E> entity, Object... params) {
 
 		ResultSet result = null;
+		E value = null;
 
-		// ステートメントを作成
-		PreparedStatement statement = con.prepareStatement(sql);
+		try (Connection con = DBManager.getConnection();) {
+			try (PreparedStatement statement = con.prepareStatement(sql);) {
+				// ステートメントにパラメータをセット
+				setParams(statement, params);
 
-		// ステートメントにパラメータをセット
-		setParams(statement, params);
+				// SQLの実行
+				result = statement.executeQuery();
 
-		// SQLの実行
-		result = statement.executeQuery();
-
-		E value = toObject(result, entity);
-
+				value = toObject(result, entity);
+			} catch (Exception e) {
+				throw e;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
 		return value;
 	}
 
@@ -107,18 +107,24 @@ public class WebApiBase  implements AutoCloseable {
 	 * @return updateCount 更新成功回数
 	 * @throws SQLException
 	 */
-	public int save(String sql, Object... params) throws SQLException {
+	public int save(String sql, Object... params) {
 
-		// ステートメントを作成
-		PreparedStatement statement = con.prepareStatement(sql);
-
-		// ステートメントにパラメータをセット
-		setParams(statement, params);
-
-		// updateの実行
 		int updateCount = 0;
-		updateCount = statement.executeUpdate();
 
+		try (Connection con = DBManager.getConnection();) {
+			try (PreparedStatement statement = con.prepareStatement(sql);) {
+				// ステートメントにパラメータをセット
+				setParams(statement, params);
+
+				// updateの実行
+				updateCount = statement.executeUpdate();
+			} catch (Exception e) {
+				throw e;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
 		return updateCount;
 	}
 
@@ -139,7 +145,7 @@ public class WebApiBase  implements AutoCloseable {
 
 		// リザルトセットのループを回す
 		if (result.next()) {
-			Field[] fields = entity.getFields();
+			Field[] fields = entity.getDeclaredFields();
 			bean = entity.newInstance();
 
 			//
@@ -167,7 +173,7 @@ public class WebApiBase  implements AutoCloseable {
 
 		// リザルトセットをループする
 		while (result.next()) {
-			Field[] fields = entity.getFields();
+			Field[] fields = entity.getDeclaredFields();
 			E bean = entity.newInstance();
 
 			// ループを回して
@@ -178,18 +184,5 @@ public class WebApiBase  implements AutoCloseable {
 			resultList.add(bean);
 		}
 		return resultList;
-	}
-
-	/**
-	 * 概要：接続を閉じる<br>
-	 * AutoCloseable インターフェースを使用しているため、DB処理終了後に<br>
-	 * 必ず接続が閉じられる<br>
-	 */
-	@Override
-	public void close() throws Exception {
-		// コネクションを閉じる
-		if (con != null) {
-			con = null;
-		}
 	}
 }

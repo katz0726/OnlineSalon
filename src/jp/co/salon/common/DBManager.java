@@ -23,6 +23,17 @@ public class DBManager implements AutoCloseable {
 		return con;
 	}
 
+	public static String getHost() {
+		return DB_HOST;
+	}
+
+	public static String getPort() {
+		return DB_PORT;
+	}
+
+	public static String getDB() {
+		return DBNAME;
+	}
 
 	/**
 	 * 概要：コネクションを閉じる<br>
