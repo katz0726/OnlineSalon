@@ -1,7 +1,8 @@
-package jp.co.sample;
+package jp.co.salon.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.ws.rs.GET;
@@ -10,20 +11,28 @@ import javax.ws.rs.Path;
 
 import org.glassfish.jersey.server.mvc.Template;
 
+import jp.co.salon.entity.Group;
+import jp.co.salon.service.WebApiBase;
+import jp.co.salon.service.sql.CreateGroupSQL;
+
 @Path("api")
-public class MyResource {
+public class LoginController {
     @GET
     @Path("/hello-mvc")
-    @Template(name="/hello-mvc")
+    @Template(name="/html/hello-mvc")
     public String helloWorld() {
-    	System.out.println("Hello, world");
+
+			WebApiBase dbutil = new WebApiBase();
+			String sql = CreateGroupSQL.getGroups();
+
+	    	List<Group> groupList = dbutil.findAll(sql, Group.class, 1);
 
         return "Hello, world";
     }
 
     @POST
     @Path("/confirm")
-    @Template(name="/confirm")
+    @Template(name="/html/confirm")
     public Map<String, Object> confirm() {
 		Map<String, Object> model = new HashMap<String, Object>();
 		Date now = new Date();
