@@ -13,22 +13,6 @@ import jp.co.salon.common.DBManager;
 public class WebApiBase {
 
 	/**
-	 * 概要：ステートメントに引数に設定したパラメータを設定する
-	 * @param statement ステートメント
-	 * @param params パラメータ
-	 * @throws SQLException
-	 */
-	public void setParams(PreparedStatement statement, Object... params)
-			throws SQLException {
-		int paramNo = 1;
-
-		// ループしてパラメータ設定する
-		for (Object param : params) {
-			statement.setObject(paramNo++, param);
-		}
-	}
-
-	/**
 	 * 概要：条件に合致するデータを全件取得する
 	 * @param sql SQL文
 	 * @param entity データクラス
@@ -129,6 +113,51 @@ public class WebApiBase {
 	}
 
 	/**
+	 * 概要：集計SQLの結果を返す
+	 * @param sql SQL文
+	 * @param params パラメータ
+	 * @return counter 集計結果
+	 */
+	public static int count(String sql, Object... params) {
+		ResultSet result = null;
+		int counter = 0;
+
+		try (Connection con = DBManager.getConnection();) {
+			try (PreparedStatement statement = con.prepareStatement(sql);) {
+				// ステートメントにパラメータをセット
+				setParams(statement, params);
+
+				// SQLの実行
+				result = statement.executeQuery();
+
+				counter = result.getInt("count");
+			} catch (Exception e) {
+				throw e;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+		}
+		return counter;
+	}
+
+	/**
+	 * 概要：ステートメントに引数に設定したパラメータを設定する
+	 * @param statement ステートメント
+	 * @param params パラメータ
+	 * @throws SQLException
+	 */
+	private static void setParams(PreparedStatement statement, Object... params)
+			throws SQLException {
+		int paramNo = 1;
+
+		// ループしてパラメータ設定する
+		for (Object param : params) {
+			statement.setObject(paramNo++, param);
+		}
+	}
+
+	/**
 	 * 概要：DBデータから指定されたクラスのオブジェクトへ変換する<br>
 	 * clazzにjavaパッケージ配下のクラスを指定した場合は、1項目のみ設定する<br>
 	 * @param rs リザルトセット
@@ -150,6 +179,7 @@ public class WebApiBase {
 
 			//
 			for (Field field : fields) {
+				field.setAccessible(true);
 				Object value = result.getObject(field.getName());
 				field.set(bean, value);
 			}
@@ -178,6 +208,7 @@ public class WebApiBase {
 
 			// ループを回して
 			for (Field field : fields) {
+				field.setAccessible(true);
 				Object value = result.getObject(field.getName());
 				field.set(bean, value);
 			}

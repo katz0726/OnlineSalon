@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,15 +12,28 @@
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+		<!-- 共通CSS -->
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
+
 		<!-- 固有CSS -->
-		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/signup.css" />
 
 		<!-- 共通JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
+
+		<title>トーク</title>
 	</head>
 	<body>
-		<div id="footer-area">
-			<p id="footer">Copyright All Rights Reserved</p>
+		<!-- header -->
+		<div id="header"><jsp:include page="element\header.jsp" flush="true" /></div>
+
+		<div id="contents">
+			<div id="contents-inner">
+				<h1>トーク</h1>
+			</div>
 		</div>
+
+		<!-- footer -->
+		<div id="footer"><jsp:include page="element\footer.jsp" flush="true" /></div>
 	</body>
 </html>
