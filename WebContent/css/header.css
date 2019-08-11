@@ -36,3 +36,25 @@ div.header-item:hover {
 span.headrer-item-title {
 	padding-left: 8px;
 }
+
+div#user-menu-area {
+	display: relative;
+	width: 120px;
+	float: right;
+	margin-top:  30px;             /* 余白指定 */
+}
+
+img#user-menu-icon {
+    border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
+    width: 50px;             /* ※縦横を同値に */
+    height: 50px;            /* ※縦横を同値に */
+}
+
+div#user-menu-box {
+	display: absolute;
+	top: 0px;
+	left: 400px;
+	width: 280px;
+	padding: 30px 20px;
+	background-color: purple;
+}

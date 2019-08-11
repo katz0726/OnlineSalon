@@ -18,8 +18,8 @@ a {
 	text-decoration: none;
 }
 
-p.subtitle {
-	background-color: #c0c0c0;
+li {
+	list-style: none;
 }
 
 span.error {

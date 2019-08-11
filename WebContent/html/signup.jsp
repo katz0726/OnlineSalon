@@ -70,9 +70,6 @@
 		<div id="footer"><jsp:include page="element\footer.jsp" flush="true" /></div>
 		<script type="text/javascript">
 			var common = new Common();
-
-			var checkStatus = common.checkPassword('password', 'confirm-password',  'register-btn');
-
 		</script>
 	</body>
 </html>

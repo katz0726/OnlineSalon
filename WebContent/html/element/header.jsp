@@ -43,6 +43,27 @@
 				<i class="fas fa-clock"></i>
 				<a href="${pageContext.request.contextPath}/menu/timeline" class="header-item-link"><span class="headrer-item-title">TIMELINE</span></a>
 			</div>
+
+			<!-- USER MENU -->
+			<div id="user-menu-area" class="header-item">
+				<img src="${pageContext.request.contextPath}/img/user.jpg" id="user-menu-icon" />
+			</div>
+
+			<div id="user-menu-box" style="display: none;">
+				<ul id="user-menu-list">
+					<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/menu/mypage" class="header-item-link">マイページ</a></li>
+					<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/menu/settings" class="header-item-link">設定</a></li>
+					<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/logout" class="header-item-link">ログアウト</a></li>
+				</ul>
+			</div>
 		</div>
+		<script type="text/javascript">
+			$(function() {
+				// 画像アイコンをクリックした場合
+				$('#user-menu-icon').on('click', function() {
+					$('#user-menu-box').toggle();
+				});
+			});
+		</script>
 	</body>
 </html>

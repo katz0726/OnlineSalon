@@ -1,9 +1,15 @@
 package jp.co.salon.controller;
 
+import java.util.List;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 import org.glassfish.jersey.server.mvc.Template;
+
+import jp.co.salon.entity.Group;
+import jp.co.salon.service.WebApiBase;
+import jp.co.salon.service.sql.LoginSQL;
 
 @Path("menu")
 public class HomeController {
@@ -11,9 +17,13 @@ public class HomeController {
 	@GET
 	@Path("/home")
 	@Template(name="/html/home")
-	public String toHome() {
-		System.out.println(1);
-		return "1";
+	public List<Group> toHome() {
+		WebApiBase dbutil = new WebApiBase();
+		String sql = LoginSQL.getGroups();
+
+    	List<Group> groupList = dbutil.findAll(sql, Group.class, 1);
+    	System.out.println(groupList);
+		return groupList;
 	}
 
 	@GET
