@@ -1,6 +1,6 @@
 package jp.co.salon.service.sql;
 
-public class CreateGroupSQL {
+public class LoginSQL {
 
 	/**
 	 * 概要：ユーザIDに紐づくグループ情報を<br>
@@ -68,11 +68,37 @@ public class CreateGroupSQL {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append("UPDATE ");
-		sql.append("	public.public.trn_chat_group AS groups ");
+		sql.append("	public.trn_chat_group AS groups ");
 		sql.append("SET ");
 		sql.append("	groups.group_name = ? ");
 		sql.append("WHERE ");
 		sql.append("	groups.group_id = ?;");
+
+		return sql.toString();
+	}
+
+	public static String updateLoginStatusOn() {
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("UPDATE ");
+		sql.append("	public.trn_user ");
+		sql.append("SET ");
+		sql.append("	login_flg = 1 ");
+		sql.append("WHERE ");
+		sql.append("	user_id = ?;");
+
+		return sql.toString();
+	}
+
+	public static String updateLoginStatusOff() {
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("UPDATE ");
+		sql.append("	public.trn_user ");
+		sql.append("SET ");
+		sql.append("	login_flg = 0 ");
+		sql.append("WHERE ");
+		sql.append("	user_id = ?;");
 
 		return sql.toString();
 	}

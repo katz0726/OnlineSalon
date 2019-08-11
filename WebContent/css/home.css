@@ -1,0 +1,81 @@
+@charset "UTF-8";
+
+div#group-area {
+	width: 80%;
+}
+
+p.subtitle {
+	background-color: #ebf6f7;
+}
+
+img.group-icon {
+    border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
+    width: 60px;             /* ※縦横を同値に */
+    height: 60px;            /* ※縦横を同値に */
+}
+
+td.group-icon-item {
+	width: 80px;
+}
+td.group-name-item {
+	font-size: 90%;
+	font-weight: bold;
+}
+
+td.modified-item {
+	text-align: right;
+	color: #dcdcdc;
+	font-size: 20%;
+}
+
+
+/**************************
+                  アコーディオン
+*************************/
+p#subtitle-groups {
+	position: relative;
+}
+p#subtitle-groups:after {
+	content: "";
+ 	position: absolute;
+	right: 25px;
+	top: 38%;
+	transition: all 0.2s ease-in-out;
+	display: block;
+	width: 8px;
+	height: 8px;
+	border-top: solid 2px #696969;
+	border-right: solid 2px #696969;
+	-webkit-transform: rotate(135deg);
+	 transform: rotate(135deg);
+}
+
+p#subtitle-groups.open:after {
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	top: 45%;
+}
+
+p#subtitle-friends {
+	position: relative;
+}
+p#subtitle-friends:after {
+	content: "";
+ 	position: absolute;
+	right: 25px;
+	top: 38%;
+	transition: all 0.2s ease-in-out;
+	display: block;
+	width: 8px;
+	height: 8px;
+	border-top: solid 2px #696969;
+	border-right: solid 2px #696969;
+	-webkit-transform: rotate(135deg);
+	 transform: rotate(135deg);
+}
+
+p#subtitle-friends.open:after {
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	top: 45%;
+}

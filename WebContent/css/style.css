@@ -1,11 +1,39 @@
 @charset "UTF-8";
 
-table, th, td {
-	border-collapse: collapse;
-	border: #000 1px solid;
+html, body {
+	font-family: 'メイリオ';
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	top: 0;
+	bottom: 0;
 }
 
-th {
-	background-color: pink;
+input[type="text"], input[type="email"], input[type="password"] {
+	width: 560px;
 }
 
+a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+span.error {
+	font-weight: bold;
+	font-size: 80%;
+	color: red;
+}
+
+div#contents {
+	width: 100%;
+	padding-top: 50px;
+}
+
+div#contents-inner {
+	width: 50%;
+	margin: 0 auto;
+}

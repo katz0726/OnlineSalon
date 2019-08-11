@@ -4,27 +4,54 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<!-- jQuery -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+		<!-- Fontawsome -->
+		<!-- 共通CSS -->
+		<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+		<!-- 固有CSS -->
+		<link rel="stylesheet" type="text/css" href="css/login.css" />
+
+		<!-- 共通JS -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
+
 		<title>HOME</title>
 	</head>
 	<body>
+		<!-- header -->
 		<div id="header"><jsp:include page="html\element\header.jsp" flush="true" /></div>
 
 		<div id="contents">
-			<h1>トップ画面</h1>
+			<div id="contents-inner">
 
-			<form action="api/confirm" method="post">
-				<p>ID: <input type="text" name="id" id="user-id" /></p>
-				<p>氏名： <input type="text" name="name" id="name" /></p>
-				<p>Email： <input type="text" name="email" id="email" /></p>
+				<form action="${pageContext.request.contextPath}/home" method="post">
+					<div class="form-group">
+						<label for="exampleInputEmail1">Eメールアドレス</label>
+	    				<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+	    			</div>
 
-				<button type="submit" id="submit">送信</button>
-				<button type="reset" id="clear">クリア</button>
-			</form>
+	    			<div class="form-group">
+						<label for="password">パスワード</label>
+	    				<input type="password" class="form-control" id="password" placeholder="Password">
+					</div>
 
-			<a href="api/hello-mvc" >コチラをクリック</a>
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary">ログイン</button>
+						<button type="reset" class="btn btn-secondary">クリア</button>
+					</div>
+				</form>
+
+				<a href="api/signup" >サインアップ</a>
+			</div>
 		</div>
 
-
+		<!-- footer -->
 		<div id="footer"><jsp:include page="html\element\footer.jsp" flush="true" /></div>
 	</body>
 </html>
