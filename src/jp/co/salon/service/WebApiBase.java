@@ -60,7 +60,7 @@ public class WebApiBase {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	public <E> E find(String sql, Class<E> entity, Object... params) {
+	protected <E> E find(String sql, Class<E> entity, Object... params) {
 
 		ResultSet result = null;
 		E value = null;
@@ -91,7 +91,7 @@ public class WebApiBase {
 	 * @return updateCount 更新成功回数
 	 * @throws SQLException
 	 */
-	public int save(String sql, Object... params) {
+	protected int save(String sql, Object... params) {
 
 		int updateCount = 0;
 
@@ -118,7 +118,7 @@ public class WebApiBase {
 	 * @param params パラメータ
 	 * @return counter 集計結果
 	 */
-	public static int count(String sql, Object... params) {
+	protected static int count(String sql, Object... params) {
 		ResultSet result = null;
 		int counter = 0;
 
@@ -155,6 +155,39 @@ public class WebApiBase {
 		for (Object param : params) {
 			statement.setObject(paramNo++, param);
 		}
+	}
+
+	/**
+	 * 概要：LIKE文にパラメータとして設定する文字列を生成する
+	 * @param paramString LIKE文を生成対象文字列
+	 * @param searchKind LIKE検索種別<br>
+	 * [1]: 前方一致<br>
+	 * [2]: 部分一致<br>
+	 * [3]: 後方一致
+	 * @return likeStatement LIKE文
+	 * @todo elseの分岐を実装
+	 */
+	public static String setParamOfLike(String paramString, int searchKind) {
+		StringBuilder likeStatement  = new StringBuilder();
+
+		// searchKindが「1」の場合、前方一致
+		if (searchKind == 1) {
+			likeStatement.append("%");
+			likeStatement.append(paramString);
+
+		} else if (searchKind == 2) {
+			likeStatement.append("%");
+			likeStatement.append(paramString);
+			likeStatement.append("%");
+
+		} else if (searchKind == 3) {
+			likeStatement.append(paramString);
+			likeStatement.append("%");
+		} else {
+			// それ以外の場合は処理しない
+		}
+
+		return likeStatement.toString();
 	}
 
 	/**

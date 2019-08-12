@@ -23,6 +23,23 @@ public class DBManager implements AutoCloseable {
 		return con;
 	}
 
+	/**
+	 * 概要：トランザクション開始処理<br>
+	 * オートコミットをオフにする
+	 * @throws SQLException
+	 */
+	public static void begin() throws SQLException {
+		con.setAutoCommit(false);
+	}
+
+	/**
+	 * 概要：トランザクションコミット処理<br>
+	 * 実行されたDB処理をコミットする
+	 * @throws SQLException
+	 */
+	public static void commit() throws SQLException {
+		con.commit();
+	}
 	public static String getHost() {
 		return DB_HOST;
 	}

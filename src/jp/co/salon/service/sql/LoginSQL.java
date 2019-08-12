@@ -41,20 +41,26 @@ public class LoginSQL {
 
 		return sql.toString();
 	}
+
 	/**
-	 * 概要：ユーザIDに紐づくグループ名を<br>
-	 * 更新するSQLを作成する
+	 * 概要：認証処理を行うSQLを生成する
 	 * @return sql SQL文
 	 */
-	public static String insertGroup() {
+	public static String authentication() {
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("INSERT INTO ");
-		sql.append("	public.trn_chat_group ( ");
-		sql.append("	 	group_id, ");
-		sql.append("	 	user_id, ");
-		sql.append("	 	group_name) ");
-		sql.append("VALUES ( ?, ?, ?);");
+		sql.append("SELECT ");
+		sql.append("	user_id, ");
+		sql.append("	user_name, ");
+		sql.append("	email, ");
+		sql.append("	password, ");
+		sql.append("	search_Id ");
+		sql.append("FROM ");
+		sql.append("	public.trn_user ");
+		sql.append("WHERE ");
+		sql.append("	email LIKE ?");
+		sql.append(" OR ");
+		sql.append("	password LIKE ?;");
 
 		return sql.toString();
 	}

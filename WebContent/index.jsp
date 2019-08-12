@@ -33,12 +33,12 @@
 				<form action="${pageContext.request.contextPath}/home" method="post">
 					<div class="form-group">
 						<label for="exampleInputEmail1">Eメールアドレス</label>
-	    				<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+	    				<input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
 	    			</div>
 
 	    			<div class="form-group">
 						<label for="password">パスワード</label>
-	    				<input type="password" class="form-control" id="password" placeholder="Password">
+	    				<input type="password" name="password" class="form-control" id="password" placeholder="Password">
 					</div>
 
 					<div class="form-group">

@@ -21,7 +21,7 @@ public class HomeController {
 		WebApiBase dbutil = new WebApiBase();
 		String sql = LoginSQL.getGroups();
 
-    	List<Group> groupList = dbutil.findAll(sql, Group.class, 1);
+    	List<Group> groupList = dbutil.findAll(sql, Group.class, "0019000001");
     	System.out.println(groupList);
 		return groupList;
 	}

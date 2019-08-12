@@ -6,6 +6,11 @@ div#group-area {
 
 p.subtitle {
 	background-color: #ebf6f7;
+	margin: 0px;
+}
+
+table.table {
+	margin: 0px;
 }
 
 img.group-icon {
@@ -34,6 +39,7 @@ td.modified-item {
 *************************/
 p#subtitle-groups {
 	position: relative;
+	cursor: pointer;
 }
 p#subtitle-groups:after {
 	content: "";
@@ -58,6 +64,7 @@ p#subtitle-groups.open:after {
 
 p#subtitle-friends {
 	position: relative;
+	cursor: pointer;
 }
 p#subtitle-friends:after {
 	content: "";
