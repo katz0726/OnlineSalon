@@ -47,7 +47,7 @@
 					</div>
 				</form>
 
-				<a href="api/signup" >サインアップ</a>
+				<a href="${pageContext.request.contextPath}/signup" >サインアップ</a>
 			</div>
 		</div>
 

@@ -6,16 +6,18 @@ public class SignupSQL {
 	 * 更新するSQLを作成する
 	 * @return sql SQL文
 	 */
-	public static String insertGroup() {
+	public static String insertUser() {
 		StringBuilder sql = new StringBuilder();
 
-		sql.append("INSERT INTO ");
-		sql.append("	public.trn_chat_group ( ");
-		sql.append("	 	group_id, ");
+		sql.append("INSERT ");
+		sql.append("	INTO public.trn_user ( ");
 		sql.append("	 	user_id, ");
-		sql.append("	 	group_name) ");
-		sql.append("VALUES ( ?, ?, ?);");
+		sql.append("	 	user_name, ");
+		sql.append("	 	email, ");
+		sql.append("	 	password) ");
+		sql.append("	VALUES ( ?, ?, ?, ?);");
 
+		System.out.println(sql.toString());
 		return sql.toString();
 	}
 }
