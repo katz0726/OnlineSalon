@@ -20,6 +20,7 @@
 
 		<!-- 共通JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/DateUtil.js"></script>
 
 		<title>ホーム</title>
 	</head>
@@ -58,22 +59,25 @@
 					</table>
 				</div>
 			</div>
+
+			<!-- footer -->
+			<jsp:include page="element\footer.jsp" flush="true" />
 		</div>
-
-		<!-- footer -->
-		<div id="footer"><jsp:include page="element\footer.jsp" flush="true" /></div>
-
 		<script type="text/javascript">
-			var common = new Common();
+			var myCommon = new Common();
+			var myDateUtil = new DateUtil();
 
-			// グループをクリックした場合
 			$(function() {
+				// format modifified-item
+				myDateUtil.getGroupModifiedTime('modified-item');
+
+				// In case "group" is clicked
 				$('#subtitle-groups').on('click', function() {
 					$('#group-table').children().slideToggle();
 					$(this).toggleClass('open');
 				});
 
-				// 友だちをクリックした場合
+				// In case "friend" is clicked
 				$('#subtitle-friends').on('click', function() {
 					$('#friend-table').children().slideToggle();
 					$(this).toggleClass('open');

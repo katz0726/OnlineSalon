@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+div#contents-inner {
+	margin-bottom: 80px;
+}
+
 div#group-area {
 	width: 80%;
 }
@@ -15,8 +19,8 @@ table.table {
 
 img.group-icon {
     border-radius: 50%;  /* 角丸半径を50%にする(=円形にする) */
-    width: 60px;             /* ※縦横を同値に */
-    height: 60px;            /* ※縦横を同値に */
+    width: 50px;             /* ※縦横を同値に */
+    height: 50px;            /* ※縦横を同値に */
 }
 
 td.group-icon-item {

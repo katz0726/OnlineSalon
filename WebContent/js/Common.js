@@ -1,18 +1,28 @@
-var errorIcon = '<i class="fas fa-2x fa-exclamation-triangle"></i>  エラー';
-var errorColor = '#ffc0cb';
+let errorIcon = '<i class="fas fa-2x fa-exclamation-triangle"></i>  エラー';
+let errorColor = '#ffc0cb';
 const dateFormatYear = 'YYYY/MM/DD';
 const dateFormatDay = 'MM/DD';
 const dateFormatTime = 'hh:mm';
 
-function Common() {
+class Common {
 
-	function checkPassword(password, confirm, btn) {
+	// Constructor
+    constructor() {
+    }
+
+	/**
+	 * In the case of validation error, turn the objects pink
+	 * @param {String} password
+	 * @param {String} password(confirm)
+	 * @param {String} ID of button object
+	 */
+	checkPassword(password, confirm, btn) {
 		let passoword = password;
 		let confirmPassword = confirm;
 
-		// 登録ボタンクリック時
+		// In case register button is clicked
 		$('#' + btn).on('click', function() {
-			// パスワードと確認パスワードが異なる場合
+			// In case password is different from password(confirm)
 			if (password !== confirm) {
 				$('#dl').dialog({
 					modal:true,
@@ -27,30 +37,14 @@ function Common() {
 		});
 	}
 
-	function setErrorMark(error) {
+	/**
+	 * In the case of validation error, turn the objects pink
+	 * @param  {String}  error
+	 */
+	setErrorMark(error) {
 		let errorItem = document.getElementById(error);
 
 		errorItem.style.color = errorColor;
 	}
-
-	/**
-	 * 日付をフォーマットする
-	 * @param  {Date}   date     日付
-	 * @return {String}          フォーマット済み日付
-	 */
-	function dateFormat(date) {
-		let today  = new Date();
-		let argDate = date;
-		let format = null;
-
-		try {
-
-			return format;
-		} catch (e) {
-			concole.error(DATE_FORMAT_ERROR, e.message);
-		}
-
-
-
-	}
 }
+

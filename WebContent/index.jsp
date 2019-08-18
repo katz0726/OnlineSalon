@@ -49,9 +49,9 @@
 
 				<a href="${pageContext.request.contextPath}/signup" >サインアップ</a>
 			</div>
-		</div>
 
-		<!-- footer -->
-		<div id="footer"><jsp:include page="html\element\footer.jsp" flush="true" /></div>
+			<!-- footer -->
+			<jsp:include page="html\element\footer.jsp" flush="true" />
+		</div>
 	</body>
 </html>

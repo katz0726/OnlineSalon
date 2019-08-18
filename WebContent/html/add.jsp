@@ -31,9 +31,9 @@
 			<div id="contents-inner">
 				<h1>友達を追加</h1>
 			</div>
-		</div>
 
-		<!-- footer -->
-		<div id="footer"><jsp:include page="element\footer.jsp" flush="true" /></div>
+			<!-- footer -->
+			<jsp:include page="element\footer.jsp" flush="true" />
+		</div>
 	</body>
 </html>

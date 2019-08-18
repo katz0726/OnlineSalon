@@ -21,7 +21,7 @@ public class SignupController {
     }
 
     @POST
-    @Path("/register")
+    @Path("register")
     @Template(name="/html/home")
     public String register(@FormParam("username") String username,
         	@FormParam("email") String email, @FormParam("password") String password) {

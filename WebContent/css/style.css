@@ -13,8 +13,11 @@ input[type="text"], input[type="email"], input[type="password"] {
 	width: 560px;
 }
 
+p {
+	margin: 0px;
+}
+
 a {
-	color: #FFFFFF;
 	text-decoration: none;
 }
 
@@ -29,8 +32,12 @@ span.error {
 }
 
 div#contents {
+	position: relative;
 	width: 100%;
-	padding-top: 50px;
+	min-height: 100vh;
+	padding-top: 100px;
+	padding-bottom: 240px;
+	box-sizing: border-box;	/*←全て含めてmin-height:100vhに*/
 }
 
 div#contents-inner {
