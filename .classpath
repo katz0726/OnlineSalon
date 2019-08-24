@@ -13,12 +13,10 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="D:/libs/jackson-annotations-2.9.9.jar"/>
-	<classpathentry kind="lib" path="D:/libs/jackson-core-2.9.9.jar"/>
-	<classpathentry kind="lib" path="D:/libs/jackson-databind-2.9.9.1.jar"/>
 	<classpathentry kind="lib" path="D:/libs/jstl-1.2.jar"/>
 	<classpathentry kind="lib" path="D:/libs/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="D:/libs/postgresql-42.2.6.jar"/>
 	<classpathentry kind="lib" path="D:/libs/thymeleaf-3.0.11.RELEASE.jar"/>
+	<classpathentry kind="lib" path="D:/libs/jsonic-1.3.10.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

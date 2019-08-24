@@ -24,6 +24,7 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/add.css" />
 
 		<!-- 共通JS -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Const.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/AddFriend.js"></script>
 
@@ -39,17 +40,12 @@
 
 				<div id="tab-wrap">
 					<div id="tab-area">
-						<label class="tab-invitation tab-label" for="tab1">招待</label>
-						<label class="tab-qr-code tab-label" for="tab2">QRコード</label>
-						<label class="tab_idsearch tab-label" for="tab3">ID検索</label>
+						<label id="tab-idsearch" class="tab-label" for="tab3">ID検索</label>
+						<label id="tab-create-group" class="tab-label" for="tab1">グループ作成</label>
+						<label id="tab-open-chat" class="tab-label" for="tab2">オープンチャット作成</label>
+
 					</div>
 					<div id="panel-area">
-						<div id="panel-invitaion" class="tab-panel">
-							<p>panel1</p>
-						</div>
-						<div id="panel-qrcode" class="tab-panel">
-							<p>panel2</p>
-						</div>
 						<div id="panel-idsearch" class="tab-panel">
 							<div id="search-box-area" class="input-group">
 								<input type="text" id="search-box" class="form-control" placeholder="友だちのIDで検索" />
@@ -57,6 +53,12 @@
 										<button type="button" id="search-btn" class="btn btn-primary"><i class="fas fa-search"></i></button>
 									</span>
 							</div>
+						</div>
+						<div id="panel-create-group" class="tab-panel">
+							<p>グループ</p>
+						</div>
+						<div id="panel-open-chat" class="tab-panel">
+							<p>オープンチャット作成</p>
 						</div>
 					</div>
 				</div>
@@ -69,44 +71,53 @@
 			<jsp:include page="element\footer.jsp" flush="true" />
 		</div>
 		<script type="text/javascript">
+			// Initialize
 			var myCommon = new Common();
 			var myAdd = new AddFriend();
 
 			$(function() {
+				// Initialize tab area
+				myAdd.inner.initialize();
+
+				// In case a tab is clicked
 				$('.tab-label').on('click', function(){
-					var $th = $(this).index();
+					let $th = $(this).index();
 					$('.tab-label').removeClass('active');
 					$('.tab-panel').removeClass('active');
 					$(this).addClass('active');
 					$('.tab-panel').eq($th).addClass('active');
 				});
 
-				$('#search-btn').on('click', function() {
+/*				$('#search-btn').on('click', function() {
 					// get a search condition
-					var searchCondition = $('#search-box').val();
+					let searchCondition = $('#search-box').val();
+					let json = '';
+					let result = [];
 
 					// check if searh condition is empty or not
 					if (myCommon.inner.checkEmpty(searchCondition)) {
 						myCommon.inner.setErrorMark('search-box');
 
 						// show error dialog message
-						myCommon.inner.showErrorDialog('#dialog-modal', ERROR_TITTLE, DATE_FORMAT_ERROR);
+						myCommon.inner.showErrorDialog('#dialog-modal', 'エラー', SEARCHID_EMPTY_ERROR);
 					} else {
 						// todo
 						// register process
-						myAdd.inner.changeConditionToJson(searchCondition);
+						json = myAdd.inner.changeConditionToJson(searchCondition);
+						result = myAdd.inner.searchFriend(json);
 					}
 				});
 
 				// In case the seach box is focused out,
 				// turn the background color of search box transparent
 				$('#search-box').on('focusout', function() {
-					var searchCondition = $('#search-box').val();
+					let searchCondition = $('#search-box').val();
 
 					if (!myCommon.inner.checkEmpty(searchCondition)) {
 						myCommon.inner.clearErrorMark('search-box');
 					}
 				});
+*/
 			});
 		</script>
 	</body>

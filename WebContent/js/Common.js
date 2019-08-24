@@ -1,9 +1,5 @@
-const ERROR_TITTLE = '<span id="error-title"><i class="fas fa-2x fa-exclamation-triangle"></i>  エラー</span>';
 const ERROR_COLOR = '#ffc0cb';
 const DEFAULT_COLOR = 'transparent';
-
-// error message
-const DATE_FORMAT_ERROR = '日付フォーマットに誤りがあります';
 
 var Common = (function() {
 	'use strict'
@@ -14,26 +10,14 @@ var Common = (function() {
 		 * @param {String} password
 		 * @param {String} password(confirm)
 		 * @param {String} ID of button object
+		 * @todo add the process to show error dialog
 		 */
 		checkPassword : function(password, confirm, btn) {
 			let passoword = password;
 			let confirmPassword = confirm;
 
 			// In case register button is clicked
-			$('#' + btn).on('click', function() {
-				// In case password is different from password(confirm)
-				if (password !== confirm) {
-					$('#dl').dialog({
-						modal: true,
-						title: ERROR_TITTLE,
-						buttons: {
-							'OK': function() {
-								$(this).dialog("close");
-							}
-						}
-					});
-				}
-			});
+
 		},
 
 		/**
@@ -81,8 +65,8 @@ var Common = (function() {
 			$(ele).dialog({
 				modal:true,
 				title: title,
-			    height: 260,
-			    width: 320,
+			    height: 240,
+			    width: 300,
 				buttons: {
 					'OK': function() {
 						$(this).dialog("close");
