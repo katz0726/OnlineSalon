@@ -1,0 +1,5 @@
+#管理対象外とする
+.project
+.classpath
+.settings/
+build/
