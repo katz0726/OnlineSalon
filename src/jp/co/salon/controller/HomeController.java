@@ -22,7 +22,6 @@ public class HomeController {
 		String sql = LoginSQL.getGroups();
 
     	List<Group> groupList = dbutil.findAll(sql, Group.class, "0019000001");
-    	System.out.println(groupList);
 		return groupList;
 	}
 
@@ -30,23 +29,20 @@ public class HomeController {
 	@Path("/talk")
 	@Template(name="/html/talk")
 	public String toTalk() {
-		System.out.println(2);
-		return "2";
+		return "";
 	}
 
 	@GET
 	@Path("/add")
 	@Template(name="/html/add")
 	public String toAddFriends() {
-		System.out.println(3);
-		return "3";
+		return "";
 	}
 
 	@GET
 	@Path("/timeline")
 	@Template(name="/html/timeline")
 	public String toTimeline() {
-		System.out.println(4);
-		return "4";
+		return "";
 	}
 }

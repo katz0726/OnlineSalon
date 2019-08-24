@@ -26,7 +26,7 @@
 	</head>
 	<body>
 		<!-- header -->
-		<div id="header"><jsp:include page="element\header.jsp" flush="true" /></div>
+		<jsp:include page="element\header.jsp" flush="true" />
 
 		<div id="contents">
 			<div id="contents-inner">
@@ -64,12 +64,11 @@
 			<jsp:include page="element\footer.jsp" flush="true" />
 		</div>
 		<script type="text/javascript">
-			var myCommon = new Common();
 			var myDateUtil = new DateUtil();
 
 			$(function() {
 				// format modifified-item
-				myDateUtil.getGroupModifiedTime('modified-item');
+				myDateUtil.inner.getGroupModifiedTime('modified-item');
 
 				// In case "group" is clicked
 				$('#subtitle-groups').on('click', function() {

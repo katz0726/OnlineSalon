@@ -25,7 +25,7 @@
 	</head>
 	<body>
 		<!-- header -->
-		<div id="header"><jsp:include page="element\header.jsp" flush="true" /></div>
+		<jsp:include page="element\header.jsp" flush="true" />
 
 		<div id="contents">
 			<div id="contents-inner">

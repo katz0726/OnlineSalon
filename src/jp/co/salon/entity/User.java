@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 @Entity
-public class LoginUser {
+public class User {
 	@Id
 	@NotNull
 	@Column(name="user_id")

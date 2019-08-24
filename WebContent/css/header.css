@@ -11,7 +11,7 @@ a.header-item-link:hover {
 	text-decoration: none;
 }
 
-div#header-area {
+#header-area {
 	width: 100%;
 	height: 90px;
 	padding-left: 60px;

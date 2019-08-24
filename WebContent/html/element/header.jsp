@@ -10,7 +10,7 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/header.css" />
 	</head>
 	<body>
-		<div id="header-area">
+		<header id="header-area">
 			<!-- HOME -->
 			<div id="home-area" class="header-item">
 				<i class="fas fa-home"></i>
@@ -47,7 +47,7 @@
 					<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/logout" class="header-item-link">ログアウト</a></li>
 				</ul>
 			</div>
-		</div>
+		</header>
 		<script type="text/javascript">
 			$(function() {
 				// 画像アイコンをクリックした場合

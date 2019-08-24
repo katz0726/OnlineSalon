@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.salon.entity.Group;
-import jp.co.salon.entity.LoginUser;
+import jp.co.salon.entity.User;
 import jp.co.salon.service.sql.LoginSQL;
 
 public class LoginService extends WebApiBase {
@@ -49,16 +49,16 @@ public class LoginService extends WebApiBase {
 	 * @todo 認証処理を実装する
 	 * @todo トランザクション制御する
 	 */
-	public LoginUser auth(String email, String password) {
+	public User auth(String email, String password) {
 
-		LoginUser loginUser = new LoginUser();
+		User loginUser = new User();
 
 		try {
 			// トランザクションを開始する
 			//DBManager.begin();
 
 			// 認証処理
-			loginUser = dbutil.find(LoginSQL.authentication(), LoginUser.class, email, password);
+			loginUser = dbutil.find(LoginSQL.authentication(), User.class, email, password);
 
 	    	// ログイン状態をオンにする
 			if (loginUser != null) {

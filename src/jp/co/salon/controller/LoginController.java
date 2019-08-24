@@ -12,7 +12,7 @@ import javax.ws.rs.Path;
 import org.glassfish.jersey.server.mvc.Template;
 
 import jp.co.salon.entity.Group;
-import jp.co.salon.entity.LoginUser;
+import jp.co.salon.entity.User;
 import jp.co.salon.service.LoginService;
 
 @Path("/")
@@ -25,14 +25,14 @@ public class LoginController {
     public List<Group> login(@FormParam("email") String email, @FormParam("password") String password) {
 
     	// ログイン認証を行う
-    	LoginUser loginUser = loginService.auth(setParamOfLike(email, 2), setParamOfLike(password, 2));
+    	User user = loginService.auth(setParamOfLike(email, 2), setParamOfLike(password, 2));
 
     	// セッションに取得したログインユーザ情報を格納
-    	if (loginUser != null) {
+    	if (user != null) {
     	}
 
     	// グループを取得する
-    	List<Group> groupList = loginService.getGroups(loginUser.getUser_id());
+    	List<Group> groupList = loginService.getGroups(user.getUser_id());
 
 		return groupList;
     }
