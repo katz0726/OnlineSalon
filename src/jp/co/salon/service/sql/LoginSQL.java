@@ -54,7 +54,7 @@ public class LoginSQL {
 		sql.append("	user_name, ");
 		sql.append("	email, ");
 		sql.append("	password, ");
-		sql.append("	search_Id ");
+		sql.append("	search_id ");
 		sql.append("FROM ");
 		sql.append("	public.trn_user ");
 		sql.append("WHERE ");

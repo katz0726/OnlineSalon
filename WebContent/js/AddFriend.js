@@ -1,6 +1,9 @@
 // request URL
-const SEARCH_URL = 'user/search';
+const SEARCH_URL = '/OnlineSalon/user/search';
 const ZENKAKU_SPACE = /\s+/;
+
+//
+let common = '';
 
 //request URL
 var AddFriend = (function() {
@@ -12,26 +15,48 @@ var AddFriend = (function() {
 	 */
 	AddFriend.prototype.inner = {
 
+		/**
+		 * choose ID Search tab
+		 */
 		initialize : function() {
 			$('#tab-idsearch').addClass('active');
 			$('#panel-idsearch').addClass('active');
 		},
 
+		/**
+		 * Search frined mached input search ID
+		 * @param {String} conditionJson
+		 * @return {Dictionary} result
+		 */
 		searchFriend : function(conditionJson) {
-			  $.ajax({
-			    type    : 'GET',
-			    url     : SEARCH_URL,
-			    data    : conditionJson,
-			    async   : true,
-			    success : function(data) {
-			    	console.log('成功！');
+			let result = new Map();
+
+			$.ajax({
+				url			: SEARCH_URL,
+				headers	: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json'
 			    },
-			    error : function(XMLHttpRequest, textStatus, errorThrown) {
-			      console.error(SEARCH_ERROR + ': ' + textStatus + '\n' + errorThrown);
-			    }
-			  });
+				'type'		: 'POST',
+				dataType	: 'json',
+				data			: conditionJson,
+				async		: false,
+				timeout	: 30000,
+				success	: function(data) {
+					result.set('user_name', data['user_name']);
+				},
+				error			: function(XMLHttpRequest, textStatus, errorThrown) {
+					console.error(SEARCH_ERROR + ': ' + textStatus + '\n' + errorThrown);
+				}
+			});
+			return result;
 		},
 
+		/**
+		 * Change search conditons to json format
+		 * @param {String} search conditoon
+		 * @return {String} json
+		 */
 		changeConditionToJson: function(condition) {
 			let conditionList = [];
 			let json = '';
@@ -42,16 +67,16 @@ var AddFriend = (function() {
 
 				json += '{';
 				for (var i = 1; i <= conditionList.length; i++) {
-					json += 'condition';
+					json += '\"condition';
 					json += i;
-					json += ':';
+					json += '\" : \"';
 					json += conditionList[i - 1];
 
 					if (i != conditionList.length) {
-						json += ',';
+						json += '\" ,';
 					}
 				}
-				json += '}';
+				json += '\"}';
 			}
 			return json;
 		}

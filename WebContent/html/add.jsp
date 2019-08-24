@@ -17,6 +17,9 @@
 		<!-- Font Awsome -->
 		<script src="https://kit.fontawesome.com/c645960b6a.js"></script>
 
+		<!-- Spin.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.js"></script>
+
 		<!-- 共通CSS -->
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
 
@@ -53,6 +56,8 @@
 										<button type="button" id="search-btn" class="btn btn-primary"><i class="fas fa-search"></i></button>
 									</span>
 							</div>
+							<!-- search result -->
+							<div id="search-result-area"></div>
 						</div>
 						<div id="panel-create-group" class="tab-panel">
 							<p>グループ</p>
@@ -63,8 +68,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="dialog-modal" style="display: none;">
-  				<p>test</p>
+			<div id="modal-dialog" style="display: none;">
 			</div>
 
 			<!-- footer -->
@@ -88,7 +92,7 @@
 					$('.tab-panel').eq($th).addClass('active');
 				});
 
-/*				$('#search-btn').on('click', function() {
+				$('#search-btn').on('click', function() {
 					// get a search condition
 					let searchCondition = $('#search-box').val();
 					let json = '';
@@ -99,12 +103,21 @@
 						myCommon.inner.setErrorMark('search-box');
 
 						// show error dialog message
-						myCommon.inner.showErrorDialog('#dialog-modal', 'エラー', SEARCHID_EMPTY_ERROR);
+						myCommon.inner.showDialog('#modal-dialog', 'エラー', SEARCHID_EMPTY_ERROR);
 					} else {
-						// todo
 						// register process
 						json = myAdd.inner.changeConditionToJson(searchCondition);
 						result = myAdd.inner.searchFriend(json);
+
+						// set a seatch result
+						if (result.size !== 0) {
+							$('#search-result-area').children().remove();
+							$('#search-result-area').append('<img src="../img/neru.png" id="friend-candidate-icon">');
+							$('#search-result-area').append('<span id="result-friend-name">' + result.get('user_name') + '</span>');
+
+						} else {
+							myCommon.inner.showDialog('#modal-dialog', '情報', NO_SEARCH_RESULT_INFO);
+						}
 					}
 				});
 
@@ -117,7 +130,7 @@
 						myCommon.inner.clearErrorMark('search-box');
 					}
 				});
-*/
+
 			});
 		</script>
 	</body>

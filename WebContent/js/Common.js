@@ -1,5 +1,5 @@
 const ERROR_COLOR = '#ffc0cb';
-const DEFAULT_COLOR = 'transparent';
+const DEFAULT_COLOR = '#ffffff';
 
 var Common = (function() {
 	'use strict'
@@ -61,7 +61,7 @@ var Common = (function() {
 		 * show error dialog message
 		 * @praram {String} ele
 		 */
-		showErrorDialog : function(ele, title, message) {
+		showDialog : function(ele, title, message) {
 			$(ele).dialog({
 				modal:true,
 				title: title,
