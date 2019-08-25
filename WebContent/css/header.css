@@ -18,6 +18,10 @@ a.header-item-link:hover {
 	background-color: #131A22;
 }
 
+#header-area-inner {
+	position: relative;
+}
+
 div.header-item {
 	display: inline-block;      /* インラインブロック要素にする */
 	margin-top:  40px;             /* 余白指定 */
@@ -38,7 +42,6 @@ span.headrer-item-title {
 }
 
 div#user-menu-area {
-	display: relative;
 	width: 120px;
 	float: right;
 	margin-top:  30px;             /* 余白指定 */
@@ -51,9 +54,10 @@ img#user-menu-icon {
 }
 
 div#user-menu-box {
-	display: absolute;
-	top: 0px;
-	left: 400px;
+	position: absolute;
+	top: 100px;
+	right: 80px;
+	z-index: -9999px;
 	width: 280px;
 	padding: 30px 20px;
 	background-color: purple;

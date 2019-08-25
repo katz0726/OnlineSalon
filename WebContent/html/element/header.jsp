@@ -37,15 +37,17 @@
 
 			<!-- USER MENU -->
 			<div id="user-menu-area" class="header-item">
-				<img src="${pageContext.request.contextPath}/img/user.jpg" id="user-menu-icon" />
-			</div>
+				<div id="user-menu-area-inner">
+					<img src="${pageContext.request.contextPath}/img/user.jpg" id="user-menu-icon" />
 
-			<div id="user-menu-box" style="display: none;">
-				<ul id="user-menu-list">
-					<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/menu/mypage" class="header-item-link">マイページ</a></li>
-					<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/menu/settings" class="header-item-link">設定</a></li>
-					<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/logout" class="header-item-link">ログアウト</a></li>
-				</ul>
+					<div id="user-menu-box" style="display: none;">
+						<ul id="user-menu-list">
+							<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/menu/mypage" class="header-item-link">マイページ</a></li>
+							<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/menu/settings" class="header-item-link">設定</a></li>
+							<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/logout" class="header-item-link">ログアウト</a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</header>
 		<script type="text/javascript">
