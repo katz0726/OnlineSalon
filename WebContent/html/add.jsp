@@ -97,6 +97,8 @@
 					let searchCondition = $('#search-box').val();
 					let json = '';
 					let result = [];
+					let spinTarget = document.getElementById('contents');
+					let mySpinner = new Spinner(SPINNER_SETTINGS);
 
 					// check if searh condition is empty or not
 					if (myCommon.inner.checkEmpty(searchCondition)) {
@@ -105,17 +107,25 @@
 						// show error dialog message
 						myCommon.inner.showDialog('#modal-dialog', 'エラー', SEARCHID_EMPTY_ERROR);
 					} else {
-						// register process
+						// start spinner
+						mySpinner.spin(spinTarget);
+
+						// convert search condition to json
 						json = myAdd.inner.changeConditionToJson(searchCondition);
+
+						// search a friend candidate
 						result = myAdd.inner.searchFriend(json);
+
+						// stop Spinner
+						mySpinner.spin();
 
 						// set a seatch result
 						if (result.size !== 0) {
 							$('#search-result-area').children().remove();
 							$('#search-result-area').append('<img src="../img/neru.png" id="friend-candidate-icon">');
 							$('#search-result-area').append('<span id="result-friend-name">' + result.get('user_name') + '</span>');
-
 						} else {
+							// show modal dialog
 							myCommon.inner.showDialog('#modal-dialog', '情報', NO_SEARCH_RESULT_INFO);
 						}
 					}
