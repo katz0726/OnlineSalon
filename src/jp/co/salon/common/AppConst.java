@@ -8,4 +8,9 @@ public class AppConst {
 	public static final String DBNAME = "Salon";
 	public static final String DB_USER = "shoya";
 	public static final String DB_PASSWORD = "bier0726";
+
+	public static class ErrorMessage {
+		public static final String SEQUENCE_GET_FAILED_ERROR = "シーケンスの取得に失敗しました";
+		public static final String USER_REGISTRATION_FAILED_ERROR = "ユーザの登録処理に失敗しました";
+	}
 }

@@ -14,10 +14,10 @@ public class SignupController {
 	private static SignupService signupService = SignupService.getInstance();
 
     @GET
-    @Path("/signup")
+    @Path("signup")
     @Template(name="/html/signup")
     public String index() {
-    	return "hello, world";
+    	return "";
     }
 
     @POST
@@ -25,10 +25,9 @@ public class SignupController {
     @Template(name="/html/home")
     public String register(@FormParam("username") String username,
         	@FormParam("email") String email, @FormParam("password") String password) {
-    	String user = null;
 
-    	System.out.println(signupService);
+    	signupService.registerUser(username, email, password);
 
-    	return user;
+    	return "";
     }
 }
