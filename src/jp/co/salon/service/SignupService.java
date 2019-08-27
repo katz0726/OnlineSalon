@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 
 import jp.co.salon.common.AppConst.ErrorMessage;
 import jp.co.salon.common.DBManager;
+import jp.co.salon.common.PasswordUtil;
 import jp.co.salon.common.Utility;
 import jp.co.salon.service.sql.SignupSQL;
 
@@ -36,8 +37,10 @@ public class SignupService extends WebApiBase {
 		try {
 			String userid = createUserId();
 
+			String hashedPassword = PasswordUtil.getSafetyPassword(password, username);
+
 			// register user
-			dbutil.save(SignupSQL.insertUser(), userid, username, email, password);
+			dbutil.save(SignupSQL.insertUser(), userid, username, email, hashedPassword);
 
 		} catch (Exception e) {
 			System.out.println(e.getClass().getName() + ErrorMessage.USER_REGISTRATION_FAILED_ERROR);
