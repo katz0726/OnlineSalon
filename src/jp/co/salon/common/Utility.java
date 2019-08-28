@@ -17,4 +17,17 @@ public class Utility {
 
 		return formatted;
 	}
+
+	/**
+	 * Summary：Check if Strings is null or empty
+	 * @return isEmpty
+	 */
+	public static boolean isEmpty(String str) {
+		boolean emptyFlg = false;
+
+		if (str == null || str.isEmpty()) {
+			emptyFlg = true;
+		}
+		return emptyFlg;
+	}
 }
