@@ -32,4 +32,20 @@ public class SignupSQL {
 
 		return sql.toString();
 	}
+
+	/**
+	 * Summary：Check if user name is the same as registered user names
+	 * @return sql
+	 */
+	public static String checkUsername() {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ");
+		sql.append("	count(*) ");
+		sql.append("FROM ");
+		sql.append("	public.trn_user ");
+		sql.append("WHERE ");
+		sql.append("	user_name = ?;");
+
+		return sql.toString();
+	}
 }

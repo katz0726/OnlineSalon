@@ -12,5 +12,7 @@ public class AppConst {
 	public static class ErrorMessage {
 		public static final String SEQUENCE_GET_FAILED_ERROR = "シーケンスの取得に失敗しました";
 		public static final String USER_REGISTRATION_FAILED_ERROR = "ユーザの登録処理に失敗しました";
+		public static final String USERNAME_CHECK_FAILED_ERROR = "ユーザ名重複チェック処理に失敗しました";
+		public static final String USER_DUPLICATE_ERROR = "ユーザ名が重複しています";
 	}
 }

@@ -22,9 +22,9 @@ public class PasswordUtil {
      * @param salt ソルト
      * @return 安全なパスワード
      */
-    public static String getSafetyPassword(String password, String salt) {
+    public static String getSafetyPassword(String password, String email) {
     	char[] passCharAry = password.toCharArray();
-    	byte[] hashedSalt = getHashedSalt(salt);
+    	byte[] hashedSalt = getHashedSalt(email);
 
     	PBEKeySpec keySpec = new PBEKeySpec(passCharAry, hashedSalt, ITERATION_COUNT, KEY_LENGTH);
 

@@ -5,14 +5,9 @@ const ZENKAKU_SPACE = /\s+/;
 //
 let common = '';
 
-//request URL
 var AddFriend = (function() {
 	'use strict'
 
-	/**
-	 * search friends matched
-	 * @param {String} conditionJson
-	 */
 	AddFriend.prototype.inner = {
 
 		/**
