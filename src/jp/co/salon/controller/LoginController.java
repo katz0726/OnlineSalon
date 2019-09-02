@@ -1,40 +1,45 @@
 package jp.co.salon.controller;
 
-import static jp.co.salon.service.WebApiBase.*;
-
-import java.util.List;
-
-import javax.ws.rs.FormParam;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.Response;
 
 import org.glassfish.jersey.server.mvc.Template;
 
-import jp.co.salon.entity.Group;
-import jp.co.salon.entity.User;
+import jp.co.salon.common.AppConst.ErrorMessage;
+import jp.co.salon.exception.WebApiException;
 import jp.co.salon.service.LoginService;
 
 @Path("/")
-public class LoginController {
+public class LoginController extends Controller {
 	private static LoginService loginService = LoginService.getInstance();
 
+	/**
+	 * Summary: authenticate login user
+	 * @param loginUser
+	 * @return groupList
+	 */
     @POST
-    @Path("/home")
-    @Template(name="/html/home")
-    public List<Group> login(@FormParam("email") String email, @FormParam("password") String password) {
+    @Path("/auth")
+    @Consumes(MediaType.APPLICATION_JSON + ";charset=UTF-8")
+    public Response login(String loginUser) {
 
-    	// ログイン認証を行う
-    	User user = loginService.auth(setParamOfLike(email, 2), setParamOfLike(password, 2));
+    	// authenticate login user
+    	String user = loginService.auth(loginUser);
 
-    	// セッションに取得したログインユーザ情報を格納
+    	// put login user's data into a sesiion
+    	NewCookie cookie = null;
     	if (user != null) {
+    		cookie = new NewCookie("user", user);
+    	} else {
+    		throw new WebApiException(ErrorMessage.USER_AUTHENTICATION_ERROR);
     	}
 
-    	// グループを取得する
-    	List<Group> groupList = loginService.getGroups(user.getUser_id());
-
-		return groupList;
+		return Response.ok().cookie(cookie).build();
     }
 
 
@@ -49,6 +54,6 @@ public class LoginController {
 		// ログイン状態をオフにする
 		loginService.logout();
 
-		return "0";
+		return "";
     }
 }

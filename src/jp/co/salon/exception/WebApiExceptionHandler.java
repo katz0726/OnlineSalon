@@ -1,7 +1,9 @@
 package jp.co.salon.exception;
 
 import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.Provider;
 
+@Provider
 public class WebApiExceptionHandler {
 
 	public Response handleException(WebApiException e) {

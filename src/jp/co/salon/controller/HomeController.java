@@ -8,20 +8,18 @@ import javax.ws.rs.Path;
 import org.glassfish.jersey.server.mvc.Template;
 
 import jp.co.salon.entity.Group;
-import jp.co.salon.service.WebApiBase;
-import jp.co.salon.service.sql.LoginSQL;
+import jp.co.salon.service.HomeService;
 
 @Path("menu")
-public class HomeController {
+public class HomeController extends Controller {
+	private static HomeService homeService = HomeService.getInstance();
 
 	@GET
 	@Path("/home")
 	@Template(name="/html/home")
 	public List<Group> toHome() {
-		WebApiBase dbutil = new WebApiBase();
-		String sql = LoginSQL.getGroups();
+    	List<Group> groupList = homeService.getGroups("0019000001");
 
-    	List<Group> groupList = dbutil.findAll(sql, Group.class, "0019000001");
 		return groupList;
 	}
 

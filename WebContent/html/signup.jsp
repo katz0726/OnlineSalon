@@ -24,7 +24,7 @@
 		<!-- 共通JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
 
-		<title>ユーザ登録</title>
+		<title>ユーザ登録 | Online Salon</title>
 	</head>
 
 	<body>

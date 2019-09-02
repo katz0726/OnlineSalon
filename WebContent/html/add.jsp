@@ -31,7 +31,7 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/AddFriend.js"></script>
 
-		<title>友だちを追加</title>
+		<title>友だちを追加 | Online Salon</title>
 	</head>
 	<body>
 		<!-- header -->

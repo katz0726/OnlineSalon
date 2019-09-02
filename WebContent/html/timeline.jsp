@@ -21,7 +21,7 @@
 		<!-- 共通JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
 
-		<title>タイムライン</title>
+		<title>タイムライン | Online Salon</title>
 	</head>
 	<body>
 		<!-- header -->

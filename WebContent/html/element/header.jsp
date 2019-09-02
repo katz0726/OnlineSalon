@@ -41,6 +41,7 @@
 					<img src="${pageContext.request.contextPath}/img/user.jpg" id="user-menu-icon" />
 
 					<div id="user-menu-box" style="display: none;">
+						<span id="user-name"></span>
 						<ul id="user-menu-list">
 							<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/menu/mypage" class="header-item-link">マイページ</a></li>
 							<li class="user-menu-list-item"><a href="${pageContext.request.contextPath}/menu/settings" class="header-item-link">設定</a></li>

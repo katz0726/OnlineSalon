@@ -10,7 +10,7 @@ import org.glassfish.jersey.server.mvc.Template;
 import jp.co.salon.service.SignupService;
 
 @Path("/")
-public class SignupController {
+public class SignupController extends Controller {
 	private static SignupService signupService = SignupService.getInstance();
 
     @GET

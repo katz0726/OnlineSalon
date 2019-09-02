@@ -1,9 +1,10 @@
 package jp.co.salon.service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import jp.co.salon.entity.Group;
+import jp.co.salon.common.AppConst.ErrorMessage;
+import jp.co.salon.common.Log;
+import jp.co.salon.common.PasswordUtil;
 import jp.co.salon.entity.User;
 import jp.co.salon.service.sql.LoginSQL;
 
@@ -11,68 +12,54 @@ public class LoginService extends WebApiBase {
 
 	private static 	LoginService dbutil = new LoginService();
 
-	/** コンストラクタ */
+	/** Constructor */
 	private LoginService() {
-		super();
-		System.out.println("Create a instance of GroupService.....");
+		System.out.println("Create a instance of LoginService.....");
 	}
 
-	/** インスタンスを取得する */
+	/** get Instance of LoginService */
 	public static LoginService getInstance() {
 		return dbutil;
 	}
 
 	/**
-	 * 概要：ユーザが参加しているグループを取得する
-	 * @return groupList グループリスト
-	 */
-	public List<Group> getGroups(String userId) {
-
-		String sql = LoginSQL.getGroups();
-		List<Group> groupList = new ArrayList<>();
-
-		try {
-			// グループを取得する
-	    	groupList = dbutil.findAll(sql, Group.class, userId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			e.getMessage();
-		}
-    	return groupList;
-	}
-
-	/**
-	 * 概要：ユーザの認証処理を行う
+	 * Summary：authenticate login user
 	 * @param email
 	 * @param password
-	 * @return loginUser ログインユーザ情報
-	 * @todo 認証処理を実装する
-	 * @todo トランザクション制御する
+	 * @return loginUser login user data
 	 */
-	public User auth(String email, String password) {
-
-		User loginUser = new User();
+	public String auth(String loginUser) {
+		User user = null;
+		String json = "";
 
 		try {
-			// トランザクションを開始する
-			//DBManager.begin();
 
-			// 認証処理
-			loginUser = dbutil.find(LoginSQL.authentication(), User.class, email, password);
+			ObjectMapper mapper = new ObjectMapper();
+			user = mapper.readValue(loginUser, User.class);
 
-	    	// ログイン状態をオンにする
-			if (loginUser != null) {
-				dbutil.save(LoginSQL.updateLoginStatusOn(), loginUser.getUser_id());
+			// authentication
+			String formHashedPassword = PasswordUtil.getSafetyPassword(user.getPassword(), user.getEmail());
+
+			// get login user's data
+			user = dbutil.find(LoginSQL.getLoginUser(), User.class, user.getEmail(), formHashedPassword);
+
+	    	// turn login status on
+			if (user == null) {
+				new Exception();
 			}
 
-			// トランザクション処理をコミットする
-			//DBManager.commit();
+			// parse User class to JSON String
+			json = mapper.writeValueAsString(user);
+
+			// turn on login status
+			dbutil.save(LoginSQL.updateLoginStatusOn(), user.getUser_id());
 
 		} catch (Exception e) {
+			Log.error(getClass().getName(), ErrorMessage.USER_AUTHENTICATION_ERROR);
 			e.printStackTrace();
 			e.getMessage();
 		}
-		return loginUser;
+		return json;
 	}
 
 	/**
@@ -83,11 +70,13 @@ public class LoginService extends WebApiBase {
 	public void logout() {
 
 		try {
-			// ユーザが保持しているセッションを開放する
-
 			// ログインステータスをオフにする
 			dbutil.save(LoginSQL.updateLoginStatusOff(), "0019000001");
+
+			// ユーザが保持しているセッションを開放する
+
 		} catch (Exception e) {
+			Log.error(getClass().getName(), ErrorMessage.USER_LOGOUT_ERROR);
 			e.printStackTrace();
 			e.getMessage();
 		}

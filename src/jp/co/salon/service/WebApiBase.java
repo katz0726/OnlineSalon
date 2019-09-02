@@ -8,19 +8,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.co.salon.common.AppConst.DBAccessMessage;
 import jp.co.salon.common.DBManager;
+import jp.co.salon.common.Log;
 
 public class WebApiBase {
 
 	/**
-	 * 概要：条件に合致するデータを全件取得する
-	 * @param sql SQL文
-	 * @param entity データクラス
-	 * @param params パラメータ
-	 * @return resultList 結果セット
-	 * @throws SQLException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
+	 * Summary: get all data matched to conditions
+	 * @param sql statement
+	 * @param entity data class
+	 * @param params parameters
+	 * @return resultList
 	 */
 	public <E> List<E> findAll(String sql, Class<E> entity, Object... params) {
 
@@ -30,20 +29,20 @@ public class WebApiBase {
 		try (Connection con = DBManager.getConnection();) {
 			try (PreparedStatement statement = con.prepareStatement(sql);) {
 
-				// ステートメントにパラメータをセット
+				// set Parameters to statement
 				setParams(statement, params);
 
-				// SQLを実行
+				// execute query
 				result = statement.executeQuery();
 
-				// リザルトセットをリストに格納
+				// set resultseet into a list
 				resultList = toObjectList(result, entity);
-
 
 			} catch (Exception e) {
 				throw e;
 			}
 		} catch (Exception e) {
+			Log.error(getClass().getName(), DBAccessMessage.DB_GET_FAILED_ERROR);
 			e.printStackTrace();
 			e.getMessage();
 		}
@@ -51,14 +50,11 @@ public class WebApiBase {
 	}
 
 	/**
-	 *  概要：条件に合致するデータを１件取得する
-	 * @param sql SQL文
-	 * @param entity データクラス
-	 * @param params パラメータ
-	 * @return value 取得データエンティティ
-	 * @throws SQLException
-	 * @throws InstantiationException
-	 * @throws IllegalAccessException
+	 *  Summary: get data matched to conditions
+	 * @param sql SQL statement
+	 * @param entity data class
+	 * @param params parameters
+	 * @return value entity
 	 */
 	protected <E> E find(String sql, Class<E> entity, Object... params) {
 
@@ -67,10 +63,11 @@ public class WebApiBase {
 
 		try (Connection con = DBManager.getConnection();) {
 			try (PreparedStatement statement = con.prepareStatement(sql);) {
-				// ステートメントにパラメータをセット
+
+				// set Parameters to statement
 				setParams(statement, params);
 
-				// SQLの実行
+				// execute query
 				result = statement.executeQuery();
 
 				value = toObject(result, entity);
@@ -78,6 +75,7 @@ public class WebApiBase {
 				throw e;
 			}
 		} catch (Exception e) {
+			Log.error(getClass().getName(), DBAccessMessage.DB_GET_FAILED_ERROR);
 			e.printStackTrace();
 			e.getMessage();
 		}
@@ -85,11 +83,10 @@ public class WebApiBase {
 	}
 
 	/**
-	 * 概要：ステートメント文の作成及びDB更新処理を実行する
-	 * @param sql SQL文
-	 * @param params SQLパラメータ
-	 * @return updateCount 更新成功回数
-	 * @throws SQLException
+	 * Summary: register or update database
+	 * @param sql statement
+	 * @param params parameters
+	 * @return updateCount update count
 	 */
 	protected int save(String sql, Object... params) {
 
@@ -106,6 +103,7 @@ public class WebApiBase {
 				throw e;
 			}
 		} catch (Exception e) {
+			Log.error(getClass().getName(), DBAccessMessage.DB_REGISTER_FAILED_ERROR);
 			e.printStackTrace();
 			e.getMessage();
 		}
@@ -114,11 +112,11 @@ public class WebApiBase {
 
 	/**
 	 * 概要：集計SQLの結果を返す
-	 * @param sql SQL文
-	 * @param params パラメータ
-	 * @return counter 集計結果
+	 * @param sql statement
+	 * @param params parameters
+	 * @return counter number of count
 	 */
-	protected static int count(String sql, Object... params) {
+	protected int count(String sql, Object... params) {
 		ResultSet result = null;
 		int counter = 0;
 
@@ -135,6 +133,7 @@ public class WebApiBase {
 				throw e;
 			}
 		} catch (Exception e) {
+			Log.error(getClass().getName(), DBAccessMessage.DB_GET_FAILED_ERROR);
 			e.printStackTrace();
 			e.getMessage();
 		}
@@ -143,8 +142,8 @@ public class WebApiBase {
 
 	/**
 	 * 概要：ステートメントに引数に設定したパラメータを設定する
-	 * @param statement ステートメント
-	 * @param params パラメータ
+	 * @param statement prepared statement
+	 * @param params parameters
 	 * @throws SQLException
 	 */
 	private static void setParams(PreparedStatement statement, Object... params)
@@ -164,8 +163,7 @@ public class WebApiBase {
 	 * [1]: 前方一致<br>
 	 * [2]: 部分一致<br>
 	 * [3]: 後方一致
-	 * @return likeStatement LIKE文
-	 * @todo elseの分岐を実装
+	 * @return likeStatement LIKE statement
 	 */
 	public static String setParamOfLike(String paramString, int searchKind) {
 		StringBuilder likeStatement  = new StringBuilder();
@@ -191,14 +189,15 @@ public class WebApiBase {
 	}
 
 	/**
-	 * 概要：DBデータから指定されたクラスのオブジェクトへ変換する<br>
-	 * clazzにjavaパッケージ配下のクラスを指定した場合は、1項目のみ設定する<br>
-	 * @param rs リザルトセット
-	 * @param clazz エンティティ
+	 * Summary：Convert the data that get from DB to data class
+	 * @param result resultset
+	 * @param entity data class
 	 * @return bean
 	 * @throws IllegalAccessException
 	 * @throws InstantiationException
 	 * @throws SQLException
+	 * @throws IllegalArgumentException
+	 * @throws SecurityException
 	 */
 	private static <E> E toObject(ResultSet result, Class<E> entity)
 			throws InstantiationException, IllegalAccessException,
@@ -210,11 +209,16 @@ public class WebApiBase {
 			Field[] fields = entity.getDeclaredFields();
 			bean = entity.newInstance();
 
-			//
 			for (Field field : fields) {
 				field.setAccessible(true);
-				Object value = result.getObject(field.getName());
-				field.set(bean, value);
+
+				try {
+					Object value = result.getObject(field.getName());
+					field.set(bean, value);
+
+				} catch(SQLException e) {
+					continue;
+				}
 			}
 		}
 		return bean;
@@ -222,8 +226,8 @@ public class WebApiBase {
 
 	/**
 	 * 概要：DBデータから指定されたクラスのオブジェクトのリストへ変換する.
-	 * @param rs DB取得結果
-	 * @param entity エンティティ
+	 * @param result resultset
+	 * @param entity dataclass
 	 * @return ビーンリスト
 	 * @throws SQLException
 	 * @throws IllegalAccessException
@@ -239,11 +243,16 @@ public class WebApiBase {
 			Field[] fields = entity.getDeclaredFields();
 			E bean = entity.newInstance();
 
-			// ループを回して
 			for (Field field : fields) {
 				field.setAccessible(true);
-				Object value = result.getObject(field.getName());
-				field.set(bean, value);
+
+				try {
+					Object value = result.getObject(field.getName());
+					field.set(bean, value);
+
+				} catch (SQLException e) {
+					continue;
+				}
 			}
 			resultList.add(bean);
 		}

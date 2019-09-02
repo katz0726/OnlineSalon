@@ -8,9 +8,17 @@
 
 		<!-- jQuery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
 		<!-- Bootstrap -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+		<!-- Font Awsome -->
+		<script src="https://kit.fontawesome.com/c645960b6a.js"></script>
+
+		<!-- Spin.js -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.js"></script>
 
 		<!-- 共通CSS -->
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
@@ -19,10 +27,12 @@
 		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/home.css" />
 
 		<!-- 共通JS -->
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Const.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/DateUtil.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Home.js"></script>
 
-		<title>ホーム</title>
+		<title>ホーム | Online Salon</title>
 	</head>
 	<body>
 		<!-- header -->
@@ -64,23 +74,35 @@
 			<jsp:include page="element\footer.jsp" flush="true" />
 		</div>
 		<script type="text/javascript">
-			var myDateUtil = new DateUtil();
-
 			$(function() {
+				let myDateUtil = new DateUtil();
+				let myHome = new Home();
+				let mySpinner = new Spinner(SPINNER_SETTINGS);
+				let spinTarget = document.getElementById('contents');
+
+				// start spinner
+				mySpinner.spin(spinTarget);
+
+				// initialize
+				myHome.inner.initialize();
+
 				// format modifified-item
 				myDateUtil.inner.getGroupModifiedTime('modified-item');
 
-				// In case "group" is clicked
-				$('#subtitle-groups').on('click', function() {
-					$('#group-table').children().slideToggle();
-					$(this).toggleClass('open');
-				});
+				// stop Spinner
+				mySpinner.spin();
+			});
 
-				// In case "friend" is clicked
-				$('#subtitle-friends').on('click', function() {
-					$('#friend-table').children().slideToggle();
-					$(this).toggleClass('open');
-				});
+			// In case "group" is clicked
+			$('#subtitle-groups').on('click', function() {
+				$('#group-table').children().slideToggle();
+				$(this).toggleClass('open');
+			});
+
+			// In case "friend" is clicked
+			$('#subtitle-friends').on('click', function() {
+				$('#friend-table').children().slideToggle();
+				$(this).toggleClass('open');
 			});
 		</script>
 	</body>

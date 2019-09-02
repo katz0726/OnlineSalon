@@ -10,7 +10,7 @@ import javax.ws.rs.ext.Provider;
 import jp.co.salon.service.AddFriendService;
 @Provider
 @Path("user")
-public class AddFriendController {
+public class AddFriendController extends Controller {
 	private static AddFriendService addFriendService = AddFriendService.getInstance();
 
 	/**
