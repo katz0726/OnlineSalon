@@ -31,7 +31,7 @@ public class LoginController extends Controller {
     	// authenticate login user
     	String user = loginService.auth(loginUser);
 
-    	// put login user's data into a sesiion
+    	// put login user's data into a cookie
     	NewCookie cookie = null;
     	if (user != null) {
     		cookie = new NewCookie("user", user);

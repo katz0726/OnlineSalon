@@ -3,20 +3,7 @@ package jp.co.salon.service.sql;
 public class SignupSQL {
 
 	/**
-	 * 概要：ユーザIDに紐づくグループ名を<br>
-	 * 更新するSQLを作成する
-	 * @return sql SQL文
-	 */
-	public static String getUserIdSequence() {
-		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT ");
-		sql.append("	nextval('user_id_seq');");
-
-		return sql.toString();
-	}
-
-	/**
-	 * Summary: create SQL to register the information of  signup user
+	 * Summary: Create SQL to register the information of  signup user
 	 * @return sql SQL
 	 */
 	public static String insertUser() {
@@ -34,7 +21,37 @@ public class SignupSQL {
 	}
 
 	/**
-	 * Summary：Check if user name is the same as registered user names
+	 * Summary：Get signup user
+	 * @return sql
+	 */
+	public static String getSignupUser() {
+		StringBuilder sql = new StringBuilder();
+
+		sql.append("SELECT ");
+		sql.append("	user_id, ");
+		sql.append("	user_name ");
+		sql.append("FROM ");
+		sql.append("	public.trn_user ");
+		sql.append("WHERE ");
+		sql.append("	user_id = ? ");
+
+		return sql.toString();
+	}
+
+	/**
+	 * Summary: Get User ID from sequence table
+	 * @return sql
+	 */
+	public static String getUserIdSequence() {
+		StringBuilder sql = new StringBuilder();
+		sql.append("SELECT ");
+		sql.append("	nextval('user_id_seq');");
+
+		return sql.toString();
+	}
+
+	/**
+	 * Summar: Check if user name is the same as registered user names
 	 * @return sql
 	 */
 	public static String checkUsername() {

@@ -4,11 +4,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jp.co.salon.common.AppConst.ErrorMessage;
 import jp.co.salon.common.DBManager;
 import jp.co.salon.common.Log;
 import jp.co.salon.common.PasswordUtil;
 import jp.co.salon.common.Utility;
+import jp.co.salon.entity.User;
 import jp.co.salon.service.sql.SignupSQL;
 
 public class SignupService extends WebApiBase {
@@ -33,8 +36,9 @@ public class SignupService extends WebApiBase {
 	 * @param email User's email
 	 * @param password User's password
 	 */
-	public void registerUser(String username, String email, String password) {
+	public String registerUser(String username, String email, String password) {
 
+		String userid = null;
 		try {
 			// check if user name is duplicated
 			if (checkDuplicateUserName(username)) {
@@ -43,7 +47,7 @@ public class SignupService extends WebApiBase {
 			}
 
 			// register user
-			String userid = createUserId();
+			userid = createUserId();
 			String hashedPassword = PasswordUtil.getSafetyPassword(password, email);
 			dbutil.save(SignupSQL.insertUser(), userid, username, email, hashedPassword);
 
@@ -52,6 +56,34 @@ public class SignupService extends WebApiBase {
 			e.printStackTrace();
 			e.getMessage();
 		}
+		return userid;
+	}
+
+	/**
+	 * Summary: Get signup user
+	 * @param userid
+	 * @return json
+	 */
+	public String getUser(String userid) {
+
+		String json = null;
+		try {
+			// get signup user
+			User signupUser = null;
+			if (userid != null) {
+				signupUser = dbutil.find(SignupSQL.getSignupUser(), User.class, userid);
+			}
+
+			// convert User class to json
+			ObjectMapper mapper = new ObjectMapper();
+			json = mapper.writeValueAsString(signupUser);
+
+		} catch (Exception e) {
+			Log.error(getClass().getName(), ErrorMessage.USER_GET_FAILED_ERROR);
+			e.printStackTrace();
+			e.getMessage();
+		}
+		return json;
 	}
 
 	/**
