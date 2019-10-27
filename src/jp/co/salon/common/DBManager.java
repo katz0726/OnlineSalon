@@ -5,20 +5,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBManager implements AutoCloseable {
-	private static final String DB_URL = "jdbc:postgresql://localhost:5432/Salon";
-	private static final String DB_HOST = "localhost";
-	private static final String DB_PORT = "5432";
-	private static final String DBNAME = "Salon";
-	private static final String DB_USER = "shoya";
-	private static final String DB_PASSWORD = "bier0726";
-
 	private static Connection con = null;
 
 	public static Connection getConnection()
 			throws SQLException, ClassNotFoundException {
 		/** クラスのロード */
 		Class.forName("org.postgresql.Driver");
-		con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+		con = DriverManager.getConnection(AppConst.DB_URL, AppConst.DB_USER, AppConst.DB_PASSWORD);
 
 		return con;
 	}
@@ -41,15 +34,15 @@ public class DBManager implements AutoCloseable {
 		con.commit();
 	}
 	public static String getHost() {
-		return DB_HOST;
+		return AppConst.DB_HOST;
 	}
 
 	public static String getPort() {
-		return DB_PORT;
+		return AppConst.DB_PORT;
 	}
 
 	public static String getDB() {
-		return DBNAME;
+		return AppConst.DBNAME;
 	}
 
 	/**

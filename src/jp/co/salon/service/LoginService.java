@@ -73,8 +73,6 @@ public class LoginService extends WebApiBase {
 			// ログインステータスをオフにする
 			dbutil.save(LoginSQL.updateLoginStatusOff(), "0019000001");
 
-			// ユーザが保持しているセッションを開放する
-
 		} catch (Exception e) {
 			Log.error(getClass().getName(), ErrorMessage.USER_LOGOUT_ERROR);
 			e.printStackTrace();
