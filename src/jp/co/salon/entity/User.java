@@ -3,50 +3,56 @@ package jp.co.salon.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 @Entity
 public class User {
 	@Id
-	@NotNull
 	@Column(name="user_id")
-	private String user_id;
+	private int user_id;
 
-	@NotNull
 	@Column(name="user_name")
 	private String user_name;
 
-	@NotNull
+	@Column(name="gender")
+	private int gender;
+
 	@Column(name="email")
 	private String email;
 
-	@NotNull
 	@Column(name="password")
 	private String password;
 
-	@Null
 	@Column(name="search_id")
 	private String search_id;
 
-
-	public String getUser_id() {
+	public int getUser_id() {
 		return user_id;
 	}
-	public void setUser_id(String user_id) {
+
+	public void setUser_id(int user_id) {
 		this.user_id = user_id;
 	}
 
 	public String getUser_name() {
 		return user_name;
 	}
+
 	public void setUser_name(String user_name) {
 		this.user_name = user_name;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -54,20 +60,22 @@ public class User {
 	public String getPassword() {
 		return password;
 	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public String getSearchId() {
+	public String getSearch_id() {
 		return search_id;
 	}
-	public void setSearchId(String searchId) {
-		this.search_id = searchId;
+
+	public void setSearch_id(String search_id) {
+		this.search_id = search_id;
 	}
 
 	@Override
 	public String toString() {
-		return "LoginUser [userId=" + user_id + ", userName=" + user_name + ", email=" + email + ", password=" + password
-				+ ", searchId=" + search_id + "]";
+		return "User [user_id=" + user_id + ", user_name=" + user_name + ", gender=" + gender + ", email=" + email
+				+ ", password=" + password + ", search_id=" + search_id + "]";
 	}
 }

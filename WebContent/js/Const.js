@@ -12,6 +12,7 @@ const DATE_FORMAT_ERROR = '日付フォーマットに誤りがあります';
 const SEARCHID_EMPTY_ERROR = '検索IDが未入力です';
 const SEARCH_ERROR = '検索処理でエラーが発生しました';
 const LOGIN_ERROR = 'ログイン処理でエラーが発生しました';
+const SIGNUP_ERROR = 'サインアップ処理でエラーが発生しました';
 const JSON_PARSE_ERROR = 'JSON変換処理に失敗しました';
 
 // INFO Messge

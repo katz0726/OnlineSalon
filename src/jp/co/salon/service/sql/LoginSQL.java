@@ -33,7 +33,7 @@ public class LoginSQL {
 		sql.append("	user_id, ");
 		sql.append("	user_name ");
 		sql.append("FROM ");
-		sql.append("	public.trn_user ");
+		sql.append("	public.trn_users ");
 		sql.append("WHERE ");
 		sql.append("	email = ? ");
 		sql.append("AND ");
@@ -64,9 +64,10 @@ public class LoginSQL {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append("UPDATE ");
-		sql.append("	public.trn_user ");
+		sql.append("	public.trn_users ");
 		sql.append("SET ");
-		sql.append("	login_flg = 1 ");
+		sql.append("	login_flg = 1, ");
+		sql.append("	modified = current_timestamp ");
 		sql.append("WHERE ");
 		sql.append("	user_id = ?;");
 
@@ -79,7 +80,8 @@ public class LoginSQL {
 		sql.append("UPDATE ");
 		sql.append("	public.trn_user ");
 		sql.append("SET ");
-		sql.append("	login_flg = 0 ");
+		sql.append("	login_flg = 0, ");
+		sql.append("	modified = current_timestamp ");
 		sql.append("WHERE ");
 		sql.append("	user_id = ?;");
 

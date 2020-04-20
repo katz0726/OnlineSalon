@@ -16,10 +16,9 @@
 		<!-- Font Awsome -->
 		<script src="https://kit.fontawesome.com/c645960b6a.js"></script>
 
-		<!-- Spin.js -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.js"></script>
 		<!-- 共通CSS -->
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css" />
 
 		<!-- 固有CSS -->
 		<link rel="stylesheet" type="text/css" href="css/login.css" />
@@ -27,14 +26,13 @@
 		<!-- 共通JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Const.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Common.js"></script>
+
+		<!-- 固有JS -->
 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/Login.js"></script>
 
 		<title>HOME</title>
 	</head>
 	<body>
-		<!-- header -->
-		<div id="header"><jsp:include page="html\element\header.jsp" flush="true" /></div>
-
 		<div id="contents">
 			<div id="contents-inner">
 				<form>
@@ -45,7 +43,7 @@
 
 		    		<div class="form-group">
 						<label for="password">パスワード</label>
-		    			<input type="password" name="password" class="form-control" id="password" placeholder="Password">
+		    			<input type="password" name="password" class="form-control" id="password" placeholder="Password" maxlength="12">
 					</div>
 
 					<div class="form-group">
@@ -61,44 +59,16 @@
 			<jsp:include page="html\element\footer.jsp" flush="true" />
 		</div>
 		<script type="text/javascript">
-			// Initialize
 			let myCommon = new Common();
 			let myLogin = new Login();
 
 			$(function() {
 				$('#login-btn').on('click', function(e) {
-					let email = $('#email').val();
-					let password = $('#password').val();
-					let spinTarget = document.getElementById('contents');
-					let mySpinner = new Spinner(SPINNER_SETTINGS);
-
-					// In case email is empty
-					if (myCommon.inner.checkEmpty(email)) {
-						myCommon.inner.setErrorMark('email');
+					if (!myLogin.inner.checkForm()) {
 						return false;
-					} else if (myCommon.inner.checkEmpty(password)) {
-						myCommon.inner.setErrorMark('password');
-						return false;
-					} else {
-						// start spinner
-						mySpinner.spin(spinTarget);
-
-						// authentication
-						myLogin.inner.auth();
-
-						// stop Spinner
-						mySpinner.spin();
 					}
-				});
-
-				// In case email is focused out
-				$('#email').on('focusout', function() {
-					myCommon.inner.clearErrorMark('email');
-				});
-
-				// In case password is focused out
-				$('#password').on('focusout', function() {
-					myCommon.inner.clearErrorMark('password');
+					// login
+					myLogin.inner.auth(e);
 				});
 			});
 		</script>

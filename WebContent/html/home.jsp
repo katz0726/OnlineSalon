@@ -77,20 +77,12 @@
 			$(function() {
 				let myDateUtil = new DateUtil();
 				let myHome = new Home();
-				let mySpinner = new Spinner(SPINNER_SETTINGS);
-				let spinTarget = document.getElementById('contents');
-
-				// start spinner
-				mySpinner.spin(spinTarget);
 
 				// initialize
 				myHome.inner.initialize();
 
 				// format modifified-item
 				myDateUtil.inner.getGroupModifiedTime('modified-item');
-
-				// stop Spinner
-				mySpinner.spin();
 			});
 
 			// In case "group" is clicked

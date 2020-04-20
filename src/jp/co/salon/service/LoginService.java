@@ -4,55 +4,35 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jp.co.salon.common.AppConst.ErrorMessage;
 import jp.co.salon.common.Log;
-import jp.co.salon.common.PasswordUtil;
+import jp.co.salon.common.PasswordManager;
 import jp.co.salon.entity.User;
 import jp.co.salon.service.sql.LoginSQL;
 
 public class LoginService extends WebApiBase {
-
-	private static 	LoginService dbutil = new LoginService();
-
-	/** Constructor */
-	private LoginService() {
-		System.out.println("Create a instance of LoginService.....");
-	}
-
-	/** get Instance of LoginService */
-	public static LoginService getInstance() {
-		return dbutil;
-	}
-
 	/**
 	 * Summary：authenticate login user
-	 * @param email
-	 * @param password
-	 * @return loginUser login user data
+	 * @param loginUser
+	 * @return json login user data
 	 */
-	public String auth(String loginUser) {
-		User user = null;
+	public String authenticate(String userJson) {
 		String json = "";
 
 		try {
-
 			ObjectMapper mapper = new ObjectMapper();
-			user = mapper.readValue(loginUser, User.class);
+			User loginForm = mapper.readValue(userJson, User.class);
 
 			// authentication
-			String formHashedPassword = PasswordUtil.getSafetyPassword(user.getPassword(), user.getEmail());
+			String hashedPassword = PasswordManager.getSafetyPassword(loginForm.getPassword(), loginForm.getEmail());
 
 			// get login user's data
-			user = dbutil.find(LoginSQL.getLoginUser(), User.class, user.getEmail(), formHashedPassword);
-
-	    	// turn login status on
-			if (user == null) {
-				new Exception();
-			}
+			User loginUser = super.find(LoginSQL.getLoginUser(), User.class, loginForm.getEmail(), hashedPassword);
 
 			// parse User class to JSON String
-			json = mapper.writeValueAsString(user);
+			ObjectMapper mapper2 = new ObjectMapper();
+			json = mapper2.writeValueAsString(loginUser);
 
 			// turn on login status
-			dbutil.save(LoginSQL.updateLoginStatusOn(), user.getUser_id());
+			super.save(LoginSQL.updateLoginStatusOn(), loginUser.getUser_id());
 
 		} catch (Exception e) {
 			Log.error(getClass().getName(), ErrorMessage.USER_AUTHENTICATION_ERROR);
@@ -71,7 +51,7 @@ public class LoginService extends WebApiBase {
 
 		try {
 			// ログインステータスをオフにする
-			dbutil.save(LoginSQL.updateLoginStatusOff(), "0019000001");
+			super.save(LoginSQL.updateLoginStatusOff(), "0019000001");
 
 		} catch (Exception e) {
 			Log.error(getClass().getName(), ErrorMessage.USER_LOGOUT_ERROR);

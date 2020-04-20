@@ -10,12 +10,14 @@ public class SignupSQL {
 		StringBuilder sql = new StringBuilder();
 
 		sql.append("INSERT ");
-		sql.append("	INTO public.trn_user ( ");
-		sql.append("	 	user_id, ");
-		sql.append("	 	user_name, ");
-		sql.append("	 	email, ");
-		sql.append("	 	password) ");
-		sql.append("	VALUES ( ?, ?, ?, ?);");
+		sql.append("	INTO public.trn_users ( ");
+		sql.append("	 	user_id ");
+		sql.append("	 	,user_name ");
+		sql.append("	 	,gender ");
+		sql.append("	 	,email ");
+		sql.append("	 	,password ");
+		sql.append("	 	,search_id ");
+		sql.append("	) VALUES ( ?, ?, ?, ?, ?, ?);");
 
 		return sql.toString();
 	}
@@ -31,7 +33,7 @@ public class SignupSQL {
 		sql.append("	user_id, ");
 		sql.append("	user_name ");
 		sql.append("FROM ");
-		sql.append("	public.trn_user ");
+		sql.append("	public.trn_users ");
 		sql.append("WHERE ");
 		sql.append("	user_id = ? ");
 
@@ -45,7 +47,7 @@ public class SignupSQL {
 	public static String getUserIdSequence() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT ");
-		sql.append("	nextval('user_id_seq');");
+		sql.append("	nextval('trn_users_user_id_seq');");
 
 		return sql.toString();
 	}
@@ -59,7 +61,7 @@ public class SignupSQL {
 		sql.append("SELECT ");
 		sql.append("	count(*) ");
 		sql.append("FROM ");
-		sql.append("	public.trn_user ");
+		sql.append("	public.trn_users ");
 		sql.append("WHERE ");
 		sql.append("	user_name = ?;");
 

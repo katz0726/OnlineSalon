@@ -77,6 +77,15 @@ var Common = (function() {
 			});
 
 			$(ele).text(message);
+		},
+
+		/**
+		 * Move to a new page
+		 * @praram {String} path: link path to new page
+		 */
+		moveTo: function(path) {
+			window.location.href = path;
+			window.open(path);
 		}
 	}
 });

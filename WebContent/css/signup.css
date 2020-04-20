@@ -9,6 +9,10 @@ input[type="text"], input[type="email"], input[type="password"] {
 	width: 560px;
 }
 
+select#gender {
+	width: 560px;
+}
+
 p.subtitle {
 	background-color: #c0c0c0;
 }

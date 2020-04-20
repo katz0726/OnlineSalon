@@ -1,40 +1,22 @@
-const REQUEST_URL = '/OnlineSalon/auth';
+const REQUEST_URL = '/OnlineSalon/signup';
 const HOME_URL = 'http://localhost:8080/OnlineSalon/menu/home';
 const TIMEOUT_MSEC = 30000;
 
-//check
+// check
 const PASSWORD_MIN_LENGTH = 6;
 const PASSWORD_LENGTH_ERROR = '<span id="error-massage">パスワードは6文字以上、１２文字以下の半角英数字で入力してください</span>';
 
 // request URL
-var Login = (function() {
+var Signup = (function() {
 	'use strict'
 
-	Login.prototype.inner = {
+	Signup.prototype.inner = {
 
-		checkForm: function() {
-			let checkFlg = true;
-
-			if ($('#email').val() === "") {
-				myCommon.inner.setErrorMark('email');
-				checkFlg = false;
-			}
-
-			if ($('#password').val() === "") {
-				myCommon.inner.setErrorMark('password');
-				checkFlg = false;
-			}
-
-			if ($('#password').val().length < PASSWORD_MIN_LENGTH) {
-				/**
-				 * @todo メッセージ追加処理を実装
-				 */
-				checkFlg = false;
-			}
-			return checkFlg;
-		},
-
-		auth: function(event) {
+		/**
+		 * @param null
+		 * @return null
+		 */
+		signup: function(event) {
 			let data = [];
 			let json = '';
 
@@ -62,15 +44,15 @@ var Login = (function() {
 					location.href = HOME_URL;
 				},
 				error				 : function(XMLHttpRequest, textStatus, errorThrown) {
-					console.error(LOGIN_ERROR + ': ' + textStatus + '\n' + errorThrown);
+					console.error(SIGNUP_ERROR + ': ' + XMLHttpRequest + '\n' + textStatus + '\n' + errorThrown);
 				}
 			});
 		},
 
 		/**
 		 * parse array to json
-		 * @ {array} data
-		 * @return {String} json
+		 * @param {array} data
+		 * @return {String} jsonData
 		 */
 		parseJson : function(data) {
 			let objData = {};
@@ -80,11 +62,55 @@ var Login = (function() {
 				for (let i = 0; i < data.length; i++) {
 					objData[data[i].name] = data[i].value
 				}
+
 				jsonData = JSON.stringify(objData);
+				console.log(jsonData);
 			} catch (e) {
 				console.error(JSON_PARSE_ERROR + ': ' + e);
 			}
 			return jsonData;
+		},
+
+		/**
+		 *
+		 */
+		checkForm : function() {
+			if ($('#user-name').val() === "") {
+				myCommon.inner.setErrorMark('user-name');
+				return false;
+			}
+
+			if ($('[name=gender]').val() === "") {
+				myCommon.inner.setErrorMark('user-name');
+				return false;
+			}
+
+			$('#search-id').on('focusout', function() {
+				myCommon.inner.setErrorMark('gender');
+				return false;
+			});
+
+			if ($('#search-id').val() === "") {
+				myCommon.inner.setErrorMark('search-id');
+				return false;
+			}
+
+			if ($('#email').val() === "") {
+				myCommon.inner.setErrorMark('email');
+				return false;
+			}
+
+			if ($('#password').val() === "") {
+				myCommon.inner.setErrorMark('password');
+				return false;
+			}
+
+			if ($('#password').length < PASSWORD_MIN_LENGTH) {
+				/**
+				 * @todo メッセージ追加処理を実装
+				 */
+				return false;
+			}
 		}
 	}
 });

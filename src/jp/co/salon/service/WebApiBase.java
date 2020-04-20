@@ -173,10 +173,10 @@ public class WebApiBase {
     private static void setParams(PreparedStatement statement, Object... params) throws SQLException {
 	int paramNo = 1;
 
-	// ループしてパラメータ設定する
-	for (Object param : params) {
-	    statement.setObject(paramNo++, param);
-	}
+		// ループしてパラメータ設定する
+		for (Object param : params) {
+		    statement.setObject(paramNo++, param);
+		}
     }
 
     /**

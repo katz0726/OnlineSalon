@@ -9,47 +9,38 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.salon.common.AppConst.ErrorMessage;
 import jp.co.salon.common.DBManager;
 import jp.co.salon.common.Log;
-import jp.co.salon.common.PasswordUtil;
-import jp.co.salon.common.Utility;
+import jp.co.salon.common.PasswordManager;
 import jp.co.salon.entity.User;
+import jp.co.salon.service.sql.LoginSQL;
 import jp.co.salon.service.sql.SignupSQL;
 
 public class SignupService extends WebApiBase {
-
-	private static 	SignupService dbutil = new SignupService();
-
-	/** Constructor */
-	private SignupService() {
-		super();
-		System.out.println("Create a instance of SignupService.....");
-	}
-
-	/** get a instance of SignupService class */
-	public static SignupService getInstance() {
-		return dbutil;
-	}
-
-
 	/**
 	 * Summary: Register a signup user
-	 * @param username a name of user
-	 * @param email User's email
-	 * @param password User's password
-	 */
-	public String registerUser(String username, String email, String password) {
-
-		String userid = null;
+	 * @param formUser json formed user's data
+	 * @return userid
+	 **/
+	public int register(String formUser) {
+		int userid = 0;
 		try {
-			// check if user name is duplicated
-			if (checkDuplicateUserName(username)) {
+			ObjectMapper mapper = new ObjectMapper();
+			User user = mapper.readValue(formUser, User.class);
+
+			// Check if user name is duplicated
+			if (checkDuplicateUserName(user.getUser_name())) {
 				Log.error(getClass().getName(), ErrorMessage.USER_DUPLICATE_ERROR);
 				throw new Exception();
 			}
 
-			// register user
-			userid = createUserId();
-			String hashedPassword = PasswordUtil.getSafetyPassword(password, email);
-			dbutil.save(SignupSQL.insertUser(), userid, username, email, hashedPassword);
+			// Register user's data
+			userid = getSequence(SignupSQL.getUserIdSequence());
+			String hashedPassword = PasswordManager.getSafetyPassword(user.getEmail(), user.getPassword());
+
+			super.save(SignupSQL.insertUser(), userid, user.getUser_name(), user.getGender(),
+					user.getEmail(), hashedPassword, user.getSearch_id());
+
+			// Turn login status on
+			super.save(LoginSQL.updateLoginStatusOn(), userid);
 
 		} catch (Exception e) {
 			Log.error(getClass().getName(), ErrorMessage.USER_REGISTRATION_FAILED_ERROR);
@@ -64,14 +55,14 @@ public class SignupService extends WebApiBase {
 	 * @param userid
 	 * @return json
 	 */
-	public String getUser(String userid) {
+	public String getUser(int userid) {
 
 		String json = null;
 		try {
 			// get signup user
 			User signupUser = null;
-			if (userid != null) {
-				signupUser = dbutil.find(SignupSQL.getSignupUser(), User.class, userid);
+			if (userid != 0) {
+				signupUser = super.find(SignupSQL.getSignupUser(), User.class, userid);
 			}
 
 			// convert User class to json
@@ -87,29 +78,12 @@ public class SignupService extends WebApiBase {
 	}
 
 	/**
-	 * Summary: get a new user id from DB
-	 * @return userId
-	 */
-	private String createUserId() {
-		StringBuilder userId = new StringBuilder();
-
-		userId.append("01");
-		userId.append(Utility.getLastTwoFigures());
-
-		// get sequence
-		String userIdSeq = getSequence(SignupSQL.getUserIdSequence());
-		userId.append(String.format("%6s", userIdSeq).replace(" ", "0"));
-
-		return userId.toString();
-	}
-
-	/**
 	 * Summary: Get the sequence of user id from DB
 	 * @param sql
 	 * @return userId
 	 */
-	private String getSequence(String sql) {
-		String userIdStr = "";
+	private int getSequence(String sql) {
+		int userIdStr = 0;
 
 		try(Connection con = DBManager.getConnection();) {
 			try (PreparedStatement statement = con.prepareStatement(sql);) {
@@ -120,7 +94,7 @@ public class SignupService extends WebApiBase {
 				if (rs.next()) {
 					userId = rs.getInt(1);
 				}
-				userIdStr = (userId != 0) ? Integer.toString(userId) : "";
+				userIdStr = (userId != 0) ? userId : 0;
 			} catch (Exception e) {
 				throw e;
 			}

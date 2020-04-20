@@ -20,12 +20,27 @@ public class Utility {
 
 	/**
 	 * Summary：Check if Strings is null or empty
+	 * @param str
 	 * @return isEmpty
 	 */
 	public static boolean isEmpty(String str) {
 		boolean emptyFlg = false;
 
 		if (str == null || str.isEmpty()) {
+			emptyFlg = true;
+		}
+		return emptyFlg;
+	}
+
+	/**
+	 * Summary：Check if object is null
+	 * @param object
+	 * @return isEmpty
+	 */
+	public static boolean exists(Object object) {
+		boolean emptyFlg = false;
+
+		if (object == null) {
 			emptyFlg = true;
 		}
 		return emptyFlg;

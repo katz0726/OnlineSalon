@@ -1,26 +1,28 @@
 package jp.co.salon.controller;
 
-import java.util.List;
-
+import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 import org.glassfish.jersey.server.mvc.Template;
 
-import jp.co.salon.entity.Group;
 import jp.co.salon.service.HomeService;
 
 @Path("menu")
 public class HomeController extends Controller {
-	private static HomeService homeService = HomeService.getInstance();
 
 	@GET
 	@Path("/home")
 	@Template(name="/html/home")
-	public List<Group> toHome() {
-    	List<Group> groupList = homeService.getGroups("0019000001");
+	public String toHome(@CookieParam("user") String cookie) {
+		HomeService homeService = new HomeService();
 
-		return groupList;
+		System.out.println("cookie value...");
+		System.out.println(cookie);
+		// cookieからIDを取得する
+    	String groupList = homeService.getGroups(cookie);
+
+		return "";
 	}
 
 	@GET
